@@ -6,7 +6,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class JSONReadTests {
 	@Test
-	public void SimpleJSON() {
-		JSONHandler.read("simple.json");
+	public void	ProgramArguments() {
+
 	}
+
 }

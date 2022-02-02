@@ -22,6 +22,12 @@
             <version>2.8.9</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.beust</groupId>
+            <artifactId>jcommander</artifactId>
+            <version>1.82</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -39,7 +45,7 @@
                             <archive>
                                 <manifest>
                                     <mainClass>
-                                        com.sber.jnp.app.JSONHandler
+                                        com.sber.jnp.app.Main
                                     </mainClass>
                                 </manifest>
                             </archive>
