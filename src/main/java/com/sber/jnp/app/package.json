@@ -1,0 +1,39 @@
+{
+  "name": "adc",
+  "color": "Red",
+  "value": 22,
+  "children": [
+    {
+      "name": "AAA",
+      "color": "Red",
+      "value": 97,
+      "children": [
+        {
+          "name": "bc",
+          "color": "Blue",
+          "value": 44,
+          "children": []
+        },
+        {
+          "name": "cdr",
+          "color": "Red",
+          "value": 88,
+          "children": []
+        }
+      ]
+    },
+    {
+      "name": "DD 45 kl",
+      "color": "Green",
+      "value": 81,
+      "children": [
+        {
+          "name": "dss_csa",
+          "color": "Blue",
+          "value": 82,
+          "children": []
+        }
+      ]
+    }
+  ]
+}
