@@ -1,22 +1,25 @@
 package com.sber.jnp.app;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
 import com.sber.jnp.app.exceptions.IOErrorReadingJsonException;
 import com.sber.jnp.app.exceptions.NoSuchJsonFileException;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 
 public class JSONHandler {
 	private JSONHandler() {}
 
-	public static void  main(String... args) {
-		read("/Users/19809078/IdeaProjects/json-nodes-parser/src/main/java/com/sber/jnp/app/Tree.json");
+	public static void  main(String[] args) {
+		// TODO filepath in arguments
+		read(args[0]);
 	}
 
 	public static void  read(String jsonFilePath) {
 		Node    node;
-		Gson    gson = new Gson();
+		Gson	gson = new Gson();
 		String  jsonString;
 
 		jsonString = readJsonFile(jsonFilePath);
@@ -26,38 +29,16 @@ public class JSONHandler {
 		System.out.println(node.color);
 	}
 
-	private static String   readJsonFile(String jsonFilePath) {
-		FileReader      jsonFile;
-		BufferedReader  bufferedReader;
-		StringBuilder   jsonStringBuilder;
-		char            buffer[];
-		int             bytesRead;
+	private static String	readJsonFile(String jsonFilePath) {
+		String	json;
 
-		jsonFile = openJsonFile(jsonFilePath);
-		bufferedReader = new BufferedReader(jsonFile);
-		buffer = new char[512];
-		jsonStringBuilder = new StringBuilder();
 		try {
-			while ((bytesRead = bufferedReader.read(buffer, 0, 512)) != -1) {
-				jsonStringBuilder.append(buffer, 0, bytesRead);
-			}
-		} catch (IOException ex) {
+			json = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
+		} catch (IOException exception) {
 			throw new IOErrorReadingJsonException();
 		}
-		return jsonStringBuilder.toString();
+		return json;
 	}
-
-	private static FileReader openJsonFile(String jsonFilePath) {
-		FileReader fileReader;
-
-		try {
-			fileReader = new FileReader(jsonFilePath);
-		} catch (FileNotFoundException ex) {
-			throw new NoSuchJsonFileException();
-		}
-		return fileReader;
-	}
-
 	public static void  save(String jsonFilePath) {
 
 	}
