@@ -2,7 +2,7 @@ package com.sber.jnp.app;
 
 import com.google.gson.Gson;
 import com.sber.jnp.app.exceptions.IOErrorReadingJsonException;
-import com.sber.jnp.app.exceptions.NoSuchJsonFileException;
+import com.sber.jnp.app.exceptions.InvalidArgumentsException;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -11,11 +11,6 @@ import java.nio.file.Paths;
 
 public class JSONHandler {
 	private JSONHandler() {}
-
-	public static void  main(String[] args) {
-		// TODO filepath in arguments
-		read(args[0]);
-	}
 
 	public static void  read(String jsonFilePath) {
 		Node    node;
