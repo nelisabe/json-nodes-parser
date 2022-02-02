@@ -11,10 +11,25 @@ import static org.junit.jupiter.api.Assertions.*;
 public class JSONReadTests {
 	@Test()
 	public void	WrongProgramArguments() {
-		Throwable exception = assertThrows(
+		assertThrows(
 				InvalidArgumentsException.class, () -> {
-					Main.main(new String[]{"--fileFile Test"});
+					Main.main(new String[]{});
+				});
+		assertThrows(
+				InvalidArgumentsException.class, () -> {
+						Main.main(new String[]{""});
+				});
+		assertThrows(
+				InvalidArgumentsException.class, () -> {
+					Main.main(new String[]{"--jsonFile"});
+				});
+		assertThrows(
+				InvalidArgumentsException.class, () -> {
+					Main.main(new String[]{"--File"});
+				});
+		assertThrows(
+				InvalidArgumentsException.class, () -> {
+					Main.main(new String[]{"--File File File"});
 				});
 	}
-
 }
