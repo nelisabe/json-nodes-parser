@@ -19,8 +19,9 @@ public class Main {
 
 	public static void	main(String[] args) {
 		String	jsonFilePath;
+		JSONHandler jsonHandler = new JSONHandler();
 
 		jsonFilePath = parseArguments(args);
-		JSONHandler.read(jsonFilePath);
+		jsonHandler.read(jsonFilePath);
 	}
 }

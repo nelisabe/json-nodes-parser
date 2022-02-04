@@ -10,11 +10,14 @@ import java.nio.file.Paths;
 
 
 public class JSONHandler {
-	private JSONHandler() {}
+	private Node    	node;
+	private final Gson	gson;
 
-	public static void  read(String jsonFilePath) {
-		Node    node;
-		Gson	gson = new Gson();
+	public JSONHandler() {
+		gson = new Gson();
+	}
+
+	public void  	read(String jsonFilePath) {
 		String  jsonString;
 
 		jsonString = readJsonFile(jsonFilePath);
@@ -25,7 +28,7 @@ public class JSONHandler {
 		}
 	}
 
-	private static String	readJsonFile(String jsonFilePath) {
+	private String	readJsonFile(String jsonFilePath) {
 		String	json;
 
 		checkFileExtension(jsonFilePath);
@@ -37,7 +40,7 @@ public class JSONHandler {
 		return json;
 	}
 
-	private static void		checkFileExtension(String jsonFilePath) {
+	private void	checkFileExtension(String jsonFilePath) {
 		int		indexOfLastDot;
 		String 	message = "invalid file extension";
 
@@ -47,7 +50,7 @@ public class JSONHandler {
 			throw new WrongFileException(message);
 	}
 
-	public static void  save(String jsonFilePath) {
+	public void 	save(String jsonFilePath) {
 
 	}
 }
