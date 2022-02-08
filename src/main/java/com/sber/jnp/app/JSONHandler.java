@@ -11,11 +11,14 @@ import java.io.*;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Iterator;
+import java.util.function.BinaryOperator;
 
 
 public class JSONHandler {
-	private Node    	node;
-	private final Gson	gson;
+	private Node    		node;
+	private final Gson		gson;
+	private JSONIterator	iterator;
 
 	public JSONHandler() {
 		GsonBuilder gsonBuilder = new GsonBuilder();
@@ -85,5 +88,15 @@ public class JSONHandler {
 		PrintWriter out = new PrintWriter(jsonFilePath);
 		gson.toJson(node, out);
 		out.close();
+	}
+
+	public Iterator<Node> getIterator() {
+		iterator = new JSONIterator(node);
+		return iterator;
+	}
+
+	public Iterator<Node> getIterator(BinaryOperator<Node> operator) {
+		iterator = new JSONIterator(node, operator);
+		return iterator;
 	}
 }
