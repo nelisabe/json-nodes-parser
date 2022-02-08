@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,7 +31,7 @@ public class JSONHandlerReadSaveTests {
 
 	@Test
 	public void	WrongFileContent() throws IOException {
-		final String jsonFileName = createJsonFile("\n" +
+		final String jsonFile = createJsonFile("\n" +
 				"{\n" +
 				"  \"name\" \"Name 1-1-2\",\n" +
 				"  \"color\": \"Green\",\n" +
@@ -39,26 +40,109 @@ public class JSONHandlerReadSaveTests {
 				"}");
 		assertThrows(WrongFileException.class, () -> {
 			JSONHandler jsonHandler = new JSONHandler();
-			jsonHandler.read(jsonFileName);
+			jsonHandler.read(jsonFile);
 		});
-		Files.deleteIfExists(Paths.get(jsonFileName));
+		Files.deleteIfExists(Paths.get(jsonFile));
 	}
 
 	@Test
 	public void	EmptyFile() throws IOException {
-		final String jsonFileName = createJsonFile("");
+		final String jsonFile = createJsonFile("");
 		assertThrows(WrongFileException.class, () -> {
 			JSONHandler jsonHandler = new JSONHandler();
-			jsonHandler.read(jsonFileName);
+			jsonHandler.read(jsonFile);
 		});
-		Files.deleteIfExists(Paths.get(jsonFileName));
+		Files.deleteIfExists(Paths.get(jsonFile));
 
-		final String jsonFileName2 = createJsonFile("\n\n");
+		final String jsonFile2 = createJsonFile("\n\n");
 		assertThrows(WrongFileException.class, () -> {
 			JSONHandler jsonHandler = new JSONHandler();
-			jsonHandler.read(jsonFileName2);
+			jsonHandler.read(jsonFile2);
 		});
-		Files.deleteIfExists(Paths.get(jsonFileName2));
+		Files.deleteIfExists(Paths.get(jsonFile2));
+	}
+
+	@Test
+	public void	SaveBeforeRead() {
+		assertThrows(NoJsonObjectReadException.class, () -> {
+			JSONHandler jsonHandler = new JSONHandler();
+			jsonHandler.save("some.json");
+		});
+	}
+
+	@Test
+	public void	IteratorSimple() throws IOException {
+		StringBuilder	stringBuilder = new StringBuilder();
+		JSONHandler		jsonHandler = new JSONHandler();
+		Iterator<Node>	iterator;
+		String			jsonFile = createJsonFile("{\n" +
+				"  \"name\": \"A\",\n" +
+				"  \"color\": \"Blue\",\n" +
+				"  \"value\": 22,\n" +
+				"  \"children\": [\n" +
+				"    {\n" +
+				"      \"name\": \"B\",\n" +
+				"      \"color\": \"Blue\",\n" +
+				"      \"value\": 23,\n" +
+				"      \"children\": [\n" +
+				"        {\n" +
+				"          \"name\": \"E\",\n" +
+				"          \"color\": \"Blue\",\n" +
+				"          \"value\": 50,\n" +
+				"          \"children\": []\n" +
+				"        }\n" +
+				"      ]\n" +
+				"    },\n" +
+				"    {\n" +
+				"      \"name\": \"C\",\n" +
+				"      \"color\": \"Green\",\n" +
+				"      \"value\": 24,\n" +
+				"      \"children\": []\n" +
+				"    }\n" +
+				"  ]\n" +
+				"}");
+
+		jsonHandler.read(jsonFile);
+		iterator = jsonHandler.getIterator();
+		while (iterator.hasNext()) {
+			stringBuilder.append(iterator.next().getName());
+		}
+		assertEquals("ABEC", stringBuilder.toString());
+		Files.deleteIfExists(Paths.get(jsonFile));
+
+	}
+
+
+	@Test
+	public void	IteratorBig() {
+		StringBuilder	stringBuilder = new StringBuilder();
+		JSONHandler		jsonHandler = new JSONHandler();
+		Iterator<Node>	iterator;
+
+		jsonHandler.read("BigTree.json");
+		iterator = jsonHandler.getIterator();
+		while (iterator.hasNext()) {
+			stringBuilder.append(iterator.next().getName());
+		}
+		assertEquals("ABCEGDFHYXWMOZ", stringBuilder.toString());
+	}
+
+	@Test
+	public void	IteratorBigDifferentOperator() {
+		StringBuilder	stringBuilder = new StringBuilder();
+		JSONHandler		jsonHandler = new JSONHandler();
+		Iterator<Node>	iterator;
+
+		jsonHandler.read("BigTree.json");
+		iterator = jsonHandler.getIterator((x, y) -> {
+			if (y.getName().compareTo(x.getName()) < 0)
+				return y;
+			return x;
+		});
+		while (iterator.hasNext()) {
+			stringBuilder.append(iterator.next().getName());
+		}
+		assertEquals("ABCDEFGHXWMOYZ", stringBuilder.toString());
 	}
 
 	private String	createRandomJsonName() {
@@ -78,13 +162,5 @@ public class JSONHandlerReadSaveTests {
 		out.println(content);
 		out.close();
 		return fileName;
-	}
-
-	@Test
-	public void	SaveBeforeRead() {
-		assertThrows(NoJsonObjectReadException.class, () -> {
-			JSONHandler jsonHandler = new JSONHandler();
-			jsonHandler.save("some.json");
-		});
 	}
 }
