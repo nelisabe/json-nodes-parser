@@ -1,40 +1,40 @@
 {
-  "name": "Name 1",
+  "name": "A",
   "color": "Blue",
   "value": 22,
   "children": [
     {
-      "name": "Name 1-1",
+      "name": "B",
       "color": "Red",
       "value": 22,
       "children": [
         {
-          "name": "Name 1-2-1",
+          "name": "C",
           "color": "Green",
-          "value": 33,
+          "value": 10,
           "children": [
             {
-              "name": "Name 1-2-1-1",
+              "name": "D",
+              "color": "Green",
+              "value": 67,
+              "children": []
+            },
+            {
+              "name": "E",
               "color": "Green",
               "value": 33,
               "children": []
             },
             {
-              "name": "Name 1-2-1-2",
+              "name": "F",
               "color": "Green",
-              "value": 33,
+              "value": 100,
               "children": []
             },
             {
-              "name": "Name 1-2-1-3",
+              "name": "G",
               "color": "Green",
-              "value": 33,
-              "children": []
-            },
-            {
-              "name": "Name 1-2-1-4",
-              "color": "Green",
-              "value": 33,
+              "value": 50,
               "children": []
             }
           ]
@@ -42,30 +42,30 @@
       ]
     },
     {
-      "name": "Name 1-2",
+      "name": "H",
       "color": "Red",
       "value": 34,
       "children": [
         {
-          "name": "Name 1-2-1",
+          "name": "X",
           "color": "Green",
-          "value": 99,
+          "value": 10,
           "children": [
             {
-              "name": "Name 1-2-1-1",
+              "name": "W",
               "color": "Green",
               "value": 99,
               "children": [
                 {
-                  "name": "Name 1-2-1-1-1",
+                  "name": "O",
                   "color": "Green",
                   "value": 99,
                   "children": []
                 },
                 {
-                  "name": "Name 1-2-1-1-2",
+                  "name": "M",
                   "color": "Green",
-                  "value": 99,
+                  "value": 86,
                   "children": []
                 }
               ]
@@ -73,15 +73,15 @@
           ]
         },
         {
-          "name": "Name 1-1-2",
+          "name": "Z",
           "color": "Green",
-          "value": 33,
+          "value": 45,
           "children": []
         },
         {
-          "name": "Name 1-1-3",
+          "name": "Y",
           "color": "Green",
-          "value": 12,
+          "value": 1,
           "children": []
         }
       ]
