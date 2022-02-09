@@ -80,7 +80,7 @@ public class JSONHandler {
 		try {
 			Files.createFile(Paths.get(jsonFilePath));
 		} catch (FileAlreadyExistsException exception) {
-			throw new IOErrorWritingJsonFileException("file already exists: " + jsonFilePath);
+			throw new FileAlreadyExistsException("file already exists: " + jsonFilePath);
 		}
 		PrintWriter out = new PrintWriter(jsonFilePath);
 		gson.toJson(node, out);
