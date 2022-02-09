@@ -71,7 +71,29 @@ public class JSONHandlerReadSaveTests {
 	}
 
 	@Test
-	public void	IteratorSimple() throws IOException {
+	public void	IteratorSmallTree() throws IOException {
+		StringBuilder	stringBuilder = new StringBuilder();
+		JSONHandler		jsonHandler = new JSONHandler();
+		Iterator<Node>	iterator;
+		String			jsonFile = createJsonFile("{\n" +
+				"  \"name\": \"A\",\n" +
+				"  \"color\": \"Blue\",\n" +
+				"  \"value\": 22,\n" +
+				"  \"children\": []\n" +
+				"}");
+
+		jsonHandler.read(jsonFile);
+		iterator = jsonHandler.getIterator();
+		while (iterator.hasNext()) {
+			stringBuilder.append(iterator.next().getName());
+		}
+		assertEquals("A", stringBuilder.toString());
+		Files.deleteIfExists(Paths.get(jsonFile));
+
+	}
+
+	@Test
+	public void	IteratorSimpleTree() throws IOException {
 		StringBuilder	stringBuilder = new StringBuilder();
 		JSONHandler		jsonHandler = new JSONHandler();
 		Iterator<Node>	iterator;
@@ -109,12 +131,65 @@ public class JSONHandlerReadSaveTests {
 		}
 		assertEquals("ABEC", stringBuilder.toString());
 		Files.deleteIfExists(Paths.get(jsonFile));
-
 	}
 
+	@Test
+	public void	IteratorDoubleTree() throws IOException {
+		StringBuilder	stringBuilder = new StringBuilder();
+		JSONHandler		jsonHandler = new JSONHandler();
+		Iterator<Node>	iterator;
+		String			jsonFile = createJsonFile("{\n" +
+				"  \"name\": \"A\",\n" +
+				"  \"color\": \"Blue\",\n" +
+				"  \"value\": 10,\n" +
+				"  \"children\": [\n" +
+				"    {\n" +
+				"      \"name\": \"F\",\n" +
+				"      \"color\": \"Blue\",\n" +
+				"      \"value\": 99,\n" +
+				"      \"children\": [\n" +
+				"        {\n" +
+				"          \"name\": \"O\",\n" +
+				"          \"color\": \"Blue\",\n" +
+				"          \"value\": 44,\n" +
+				"          \"children\": [\n" +
+				"            {\n" +
+				"              \"name\": \"Z\",\n" +
+				"              \"color\": \"Blue\",\n" +
+				"              \"value\": 12,\n" +
+				"              \"children\": [\n" +
+				"                {\n" +
+				"                  \"name\": \"R\",\n" +
+				"                  \"color\": \"Blue\",\n" +
+				"                  \"value\": 6,\n" +
+				"                  \"children\": []\n" +
+				"                },\n" +
+				"                {\n" +
+				"                  \"name\": \"I\",\n" +
+				"                  \"color\": \"Blue\",\n" +
+				"                  \"value\": 4,\n" +
+				"                  \"children\": []\n" +
+				"                }\n" +
+				"              ]\n" +
+				"            }\n" +
+				"          ]\n" +
+				"        }\n" +
+				"      ]\n" +
+				"    }\n" +
+				"  ]\n" +
+				"}");
+
+		jsonHandler.read(jsonFile);
+		iterator = jsonHandler.getIterator();
+		while (iterator.hasNext()) {
+			stringBuilder.append(iterator.next().getName());
+		}
+		assertEquals("AFOZIR", stringBuilder.toString());
+		Files.deleteIfExists(Paths.get(jsonFile));
+	}
 
 	@Test
-	public void	IteratorBig() {
+	public void	IteratorBigTree() {
 		StringBuilder	stringBuilder = new StringBuilder();
 		JSONHandler		jsonHandler = new JSONHandler();
 		Iterator<Node>	iterator;
@@ -128,7 +203,7 @@ public class JSONHandlerReadSaveTests {
 	}
 
 	@Test
-	public void	IteratorBigDifferentOperator() {
+	public void	IteratorBigTreeDifferentOperator() {
 		StringBuilder	stringBuilder = new StringBuilder();
 		JSONHandler		jsonHandler = new JSONHandler();
 		Iterator<Node>	iterator;
@@ -143,6 +218,21 @@ public class JSONHandlerReadSaveTests {
 			stringBuilder.append(iterator.next().getName());
 		}
 		assertEquals("ABCDEFGHXWMOYZ", stringBuilder.toString());
+	}
+
+	@Test
+	public void	IteratorComplexTree() {
+		StringBuilder	stringBuilder = new StringBuilder();
+		JSONHandler		jsonHandler = new JSONHandler();
+		Iterator<Node>	iterator;
+
+		jsonHandler.read("ComplexTree.json");
+		iterator = jsonHandler.getIterator();
+		while (iterator.hasNext()) {
+			stringBuilder.append(iterator.next().getName());
+		}
+		assertEquals("ABCFGEIDKMOWKFCADIYWBMONKJSRISWJCAKWZGXFYOMLQFBQXKFWEZAJOZIR",
+				stringBuilder.toString());
 	}
 
 	private String	createRandomJsonName() {
