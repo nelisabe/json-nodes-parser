@@ -13,14 +13,16 @@ import java.util.function.BinaryOperator;
 
 
 public class JSONHandler {
-	private Node    		node;
-	private final Gson		gson;
-	private JSONIterator	iterator;
+	private Node    					node;
+	private final Gson					gson;
+	private JSONIterator				iterator;
+	private final BinaryOperator<Node>	defaultOperator;
 
 	public JSONHandler() {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();
 		gson = gsonBuilder.create();
+		defaultOperator = (x, y) -> x.getValue() < y.getValue() ? x : y;
 	}
 
 	public void  	read(String jsonFilePath) {
@@ -64,13 +66,17 @@ public class JSONHandler {
 	}
 
 	public void 	save(String jsonFilePath) {
-		if (node == null)
-			throw new NoJsonObjectReadException();
+		checkJsonWasRead();
 		try {
 			saveJsonToFile(jsonFilePath);
 		} catch (IOException exception) {
 			throw new IOErrorWritingJsonFileException(exception);
 		}
+	}
+
+	private void	checkJsonWasRead() throws NoJsonObjectReadException {
+		if (node == null)
+			throw new NoJsonObjectReadException();
 	}
 
 	private void	saveJsonToFile(String jsonFilePath) throws IOException {
@@ -85,11 +91,13 @@ public class JSONHandler {
 	}
 
 	public Iterator<Node>	iterator() {
-		iterator = new JSONIterator(node);
+		checkJsonWasRead();
+		iterator = new JSONIterator(node, defaultOperator);
 		return iterator;
 	}
 
 	public Iterator<Node>	iterator(BinaryOperator<Node> operator) {
+		checkJsonWasRead();
 		iterator = new JSONIterator(node, operator);
 		return iterator;
 	}
@@ -98,6 +106,7 @@ public class JSONHandler {
 		StringBuilder	currentPath = new StringBuilder();
 		Node			startNode;
 
+		checkJsonWasRead();
 		startNode = findSpecifiedPath(currentPath, path);
 		if (!currentPath.toString().equals(path))
 			throw new InvalidInternalJsonPathException(path);
