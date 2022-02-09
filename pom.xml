@@ -45,7 +45,7 @@
                             <archive>
                                 <manifest>
                                     <mainClass>
-                                        com.sber.jnp.app.Main
+                                        com.sber.jnp.Main.Main
                                     </mainClass>
                                 </manifest>
                             </archive>
