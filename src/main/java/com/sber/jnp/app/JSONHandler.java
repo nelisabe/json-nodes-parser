@@ -93,4 +93,40 @@ public class JSONHandler {
 		iterator = new JSONIterator(node, operator);
 		return iterator;
 	}
+
+	public Iterator<Node> getNode(String path) {
+		StringBuilder	currentPath = new StringBuilder();
+		Node			startNode;
+
+		startNode = findSpecifiedPath(currentPath, path);
+		if (!currentPath.toString().equals(path))
+			throw new InvalidInternalJsonPathException(path);
+		iterator = new JSONIterator(startNode);
+		return iterator;
+	}
+
+	private Node		findSpecifiedPath(StringBuilder currentPath, String path) {
+		Node 			startNode;
+		Node			child;
+		int				length;
+
+		startNode = node;
+		appendPath(currentPath, node.getName());
+		length = startNode.getChildren().size();
+		for (int i = 0; i < length && !currentPath.toString().equals(path); ++i) {
+			child = startNode.getChildren().get(i);
+			if (path.startsWith(currentPath + child.getName())) {
+				startNode = child;
+				length = startNode.getChildren().size();
+				i = -1;
+				appendPath(currentPath, child.getName());
+			}
+		}
+		return startNode;
+	}
+
+	private void	appendPath(StringBuilder currentPath, String append) {
+		currentPath.append(append);
+		currentPath.append("/");
+	}
 }
