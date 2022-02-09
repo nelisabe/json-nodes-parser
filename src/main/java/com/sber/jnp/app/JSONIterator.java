@@ -7,30 +7,15 @@ import java.util.Stack;
 import java.util.function.BinaryOperator;
 
 class JSONIterator implements Iterator<Node> {
-	private final Node					firstNode;
 	private final Stack<Node> 			nodesQueue;
 	private final HashSet<Node> 		passedNodes;
 	private final BinaryOperator<Node> 	operator;
 
-	public JSONIterator(Node firstNode) {
-		this.firstNode = firstNode;
-		operator = (x, y) -> x.getValue() < y.getValue() ? x : y;
-
-		nodesQueue = new Stack<>();
-		passedNodes = new HashSet<>();
-		init();
-	}
-
 	public JSONIterator(Node firstNode, BinaryOperator<Node> operator) {
-		this.firstNode = firstNode;
 		this.operator = operator;
 
 		nodesQueue = new Stack<>();
 		passedNodes = new HashSet<>();
-		init();
-	}
-
-	private void	init() {
 		nodesQueue.push(firstNode);
 	}
 
