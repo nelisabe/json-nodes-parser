@@ -2,10 +2,7 @@ package com.sber.jnp.app;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.sber.jnp.app.exceptions.IOErrorReadingJsonException;
-import com.sber.jnp.app.exceptions.IOErrorWritingJsonFileException;
-import com.sber.jnp.app.exceptions.NoJsonObjectReadException;
-import com.sber.jnp.app.exceptions.WrongFileException;
+import com.sber.jnp.app.exceptions.*;
 
 import java.io.*;
 import java.nio.file.FileAlreadyExistsException;
