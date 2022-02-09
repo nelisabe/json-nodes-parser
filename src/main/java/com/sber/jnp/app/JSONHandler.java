@@ -84,28 +84,27 @@ public class JSONHandler {
 		out.close();
 	}
 
-	public Iterator<Node> iterator() {
+	public Iterator<Node>	iterator() {
 		iterator = new JSONIterator(node);
 		return iterator;
 	}
 
-	public Iterator<Node> iterator(BinaryOperator<Node> operator) {
+	public Iterator<Node>	iterator(BinaryOperator<Node> operator) {
 		iterator = new JSONIterator(node, operator);
 		return iterator;
 	}
 
-	public Iterator<Node> getNode(String path) {
+	public Node 			getNode(String path) {
 		StringBuilder	currentPath = new StringBuilder();
 		Node			startNode;
 
 		startNode = findSpecifiedPath(currentPath, path);
 		if (!currentPath.toString().equals(path))
 			throw new InvalidInternalJsonPathException(path);
-		iterator = new JSONIterator(startNode);
-		return iterator;
+		return startNode;
 	}
 
-	private Node		findSpecifiedPath(StringBuilder currentPath, String path) {
+	private Node	findSpecifiedPath(StringBuilder currentPath, String path) {
 		Node 			startNode;
 		Node			child;
 		int				length;

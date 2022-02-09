@@ -218,17 +218,21 @@ public class JSONIteratorTests {
 	@Test
 	public void	GetIteratorByPath() {
 		JSONHandler		jsonHandler = new JSONHandler();
-		Iterator<Node>	iterator;
+		Node			node;
 
 		jsonHandler.read("ComplexTree.json");
-		iterator = jsonHandler.getNode("A/F/O/");
-		assertEquals("O", iterator.next().getName());
-		iterator = jsonHandler.getNode("A/W/F/C/D/W/B/");
-		assertEquals("B", iterator.next().getName());
-		iterator = jsonHandler.getNode("A/M/O/");
-		assertEquals("O", iterator.next().getName());
-		iterator = jsonHandler.getNode("A/");
-		assertEquals("A", iterator.next().getName());
+		node = jsonHandler.getNode("A/F/O/");
+		assertEquals("O", node.getName());
+		assertEquals(44, node.getValue());
+		node = jsonHandler.getNode("A/W/F/C/D/W/B/");
+		assertEquals("B", node.getName());
+		assertEquals(2, node.getValue());
+		node = jsonHandler.getNode("A/M/O/");
+		assertEquals("O", node.getName());
+		assertEquals(25, node.getValue());
+		node = jsonHandler.getNode("A/");
+		assertEquals("A", node.getName());
+		assertEquals(10, node.getValue());
 	}
 
 	@Test

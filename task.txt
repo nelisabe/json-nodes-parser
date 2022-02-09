@@ -19,7 +19,7 @@ Structure {
 Interface StructInterface {
     void read(String jsonFile);
     void save(String jsonFile);
-    Iterator getNode(String path);
+    Node getNode(String path);
     Iterator iterator(BinaryOperator<T> oper);
 }
  
