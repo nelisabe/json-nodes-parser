@@ -35,12 +35,7 @@ class JSONIterator implements Iterator<Node> {
 	}
 
 	public boolean	hasNext() {
-		if (!nodesQueue.empty()) {
-			if (nodesQueue.peek().equals(firstNode))
-				return !wasAllChildrenPassed(firstNode);
-			return true;
-		}
-		return false;
+		return !nodesQueue.empty();
 	}
 
 	public Node		next() {
@@ -55,7 +50,7 @@ class JSONIterator implements Iterator<Node> {
 			nodesQueue.push(selectChild(current));
 		if (!passedNodes.add(current)) {
 			current = next();
-			if (!nodesQueue.empty() && wasAllChildrenPassed(nodesQueue.peek()))
+			while (!nodesQueue.empty() && wasAllChildrenPassed(nodesQueue.peek()))
 				nodesQueue.pop();
 		}
 		return current;
