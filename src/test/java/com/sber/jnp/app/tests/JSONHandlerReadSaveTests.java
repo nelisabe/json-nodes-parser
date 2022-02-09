@@ -3,6 +3,7 @@ package com.sber.jnp.app.tests;
 import com.sber.jnp.app.*;
 import com.sber.jnp.app.exceptions.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -25,7 +26,7 @@ public class JSONHandlerReadSaveTests {
 
 	@Test
 	public void	WrongFileContent() throws IOException {
-		final String jsonFile = Utils.createJsonFile("\n" +
+		final String jsonFile = Utils.createJsonFile(
 				"{\n" +
 				"  \"name\" \"Name 1-1-2\",\n" +
 				"  \"color\": \"Green\",\n" +
@@ -62,5 +63,28 @@ public class JSONHandlerReadSaveTests {
 			JSONHandler jsonHandler = new JSONHandler();
 			jsonHandler.save("some.json");
 		});
+	}
+
+	@Test
+	public void	ReadAndSaveObjectAsJson() throws IOException {
+		JSONHandler	jsonHandler = new JSONHandler();
+		String		jsonContent =
+				"{\n" +
+				"  \"name\": \"Name 1-1-2\",\n" +
+				"  \"color\": \"Green\",\n" +
+				"  \"value\": 33,\n" +
+				"  \"children\": []\n" +
+				"}";
+		String		jsonFile = Utils.createJsonFile(jsonContent);
+		String		resultJson = Utils.createRandomJsonName();
+
+		jsonHandler.read(jsonFile);
+		jsonHandler.save(resultJson);
+		assertTrue(Files.exists(Paths.get(resultJson)));
+		assertEquals(jsonContent, new String(Files.readAllBytes(Paths.get(resultJson))));
+		assertThrows(IOErrorWritingJsonFileException.class, () ->
+				jsonHandler.save(resultJson));
+		Files.deleteIfExists(Paths.get(resultJson));
+		Files.deleteIfExists(Paths.get(jsonFile));
 	}
 }
