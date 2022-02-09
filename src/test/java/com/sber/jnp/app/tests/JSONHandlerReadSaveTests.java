@@ -235,6 +235,22 @@ public class JSONHandlerReadSaveTests {
 				stringBuilder.toString());
 	}
 
+	@Test
+	public void	IteratorComplexTreeDifferentOperator() {
+		StringBuilder	stringBuilder = new StringBuilder();
+		JSONHandler		jsonHandler = new JSONHandler();
+		Iterator<Node>	iterator;
+
+		jsonHandler.read("ComplexTree.json");
+		iterator = jsonHandler.getIterator((x, y) ->
+				x.getValue() > y.getValue() ? x : y);
+		while (iterator.hasNext()) {
+			stringBuilder.append(iterator.next().getName());
+		}
+		assertEquals("AFOZRIAJXFZEWKBQRISQJAKLMGXOFYZWCWWFCSDJWKBNOMYIAKMOBCDKEIFG",
+				stringBuilder.toString());
+	}
+
 	private String	createRandomJsonName() {
 		return ((int)(Math.random() * 1000000)) + ".json";
 	}
