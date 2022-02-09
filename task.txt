@@ -12,44 +12,7 @@ Structure {
 Набор узлов описан в JSON файле в виде древовидной структуры.
  
 Пример файла:
-JSON {
-              [
-                            {
-                                          "name": "AAA",
-                                          "color": Red,
-                                          "value": 97,
-                                          children: [
-                                                         {
-                                                                       "name": "bc",
-                                                                       "color": Blue,
-                                                                       "value": 44,
-                                                                       children: []
-                                                         },
-                                                         {
-                                                                       "name": "cdr",
-                                                                       "color": Red,
-                                                                       "value": 88,
-                                                                       children: []
-                                                         }
-                                          ]
-                            },
-                            {
-                                          "name": "DD 45 kl",
-                                          "color": Green,
-                                          "value": 81,
-                                          children: []
-                            },
-                           
-              ],
-              [
-                            {
-                                          "name": "dss_csa",
-                                          "color": Blue,
-                                          "value": 82,
-                                          children: []
-                            }
-              ]
-}
+
  
 Вложенность может быть произвольной глубины.
  
