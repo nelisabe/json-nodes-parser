@@ -252,5 +252,8 @@ public class JSONIteratorTests {
 		assertThrows(InvalidInternalJsonPathException.class, () -> {
 			jsonHandler.getNode("/A/D/P");
 		});
+		assertThrows(InvalidInternalJsonPathException.class, () -> {
+			jsonHandler.getNode("/A/W/F/C/D/O");
+		});
 	}
 }
