@@ -1,4 +1,4 @@
-package com.sber.jnp.app;
+package com.sber.jnp.Main;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;

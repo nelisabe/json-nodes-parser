@@ -1,4 +1,7 @@
-package com.sber.jnp.app;
+package com.sber.jnp.Main;
+
+import com.sber.jnp.app.JSONHandler;
+import com.sber.jnp.app.Node;
 
 import java.util.Iterator;
 
