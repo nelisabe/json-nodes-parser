@@ -53,12 +53,9 @@ public class JSONHandler {
 	}
 
 	private void	checkFileExtension(String jsonFilePath) {
-		int		indexOfLastDot;
 		String 	message = "invalid file extension";
 
-		if ((indexOfLastDot = jsonFilePath.lastIndexOf('.')) == -1)
-			throw new WrongFileException(message);
-		if (!jsonFilePath.substring(indexOfLastDot + 1).equals("json"))
+		if (!jsonFilePath.endsWith(".json"))
 			throw new WrongFileException(message);
 	}
 
