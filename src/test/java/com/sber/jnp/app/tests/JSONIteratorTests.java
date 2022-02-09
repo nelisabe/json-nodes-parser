@@ -2,6 +2,7 @@ package com.sber.jnp.app.tests;
 
 import com.sber.jnp.app.JSONHandler;
 import com.sber.jnp.app.Node;
+import com.sber.jnp.app.exceptions.InvalidInternalJsonPathException;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -212,5 +213,40 @@ public class JSONIteratorTests {
 			iterator.next().getName();
 		});
 		Files.deleteIfExists(Paths.get(jsonFile));
+	}
+
+	@Test
+	public void	GetIteratorByPath() {
+		JSONHandler		jsonHandler = new JSONHandler();
+		Iterator<Node>	iterator;
+
+		jsonHandler.read("ComplexTree.json");
+		iterator = jsonHandler.getNode("A/F/O/");
+		assertEquals("O", iterator.next().getName());
+		iterator = jsonHandler.getNode("A/W/F/C/D/W/B/");
+		assertEquals("B", iterator.next().getName());
+		iterator = jsonHandler.getNode("A/M/O/");
+		assertEquals("O", iterator.next().getName());
+		iterator = jsonHandler.getNode("A/");
+		assertEquals("A", iterator.next().getName());
+	}
+
+	@Test
+	public void	WrongIteratorPath() {
+		JSONHandler		jsonHandler = new JSONHandler();
+
+		jsonHandler.read("ComplexTree.json");
+		assertThrows(InvalidInternalJsonPathException.class, () -> {
+			jsonHandler.getNode("");
+		});
+		assertThrows(InvalidInternalJsonPathException.class, () -> {
+			jsonHandler.getNode("A/D/P");
+		});
+		assertThrows(InvalidInternalJsonPathException.class, () -> {
+			jsonHandler.getNode("O/A/A");
+		});
+		assertThrows(InvalidInternalJsonPathException.class, () -> {
+			jsonHandler.getNode("/A/D/P");
+		});
 	}
 }
