@@ -20,7 +20,7 @@ public class Main {
 
 		jsonFilePath = parseArguments(args);
 		jsonHandler.read(jsonFilePath);
-		iterator = jsonHandler.getIterator();
+		iterator = jsonHandler.iterator();
 		while (iterator.hasNext()) {
 			System.out.print(iterator.next().getName());
 		}

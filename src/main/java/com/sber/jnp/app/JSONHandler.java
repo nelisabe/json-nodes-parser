@@ -87,12 +87,12 @@ public class JSONHandler {
 		out.close();
 	}
 
-	public Iterator<Node> getIterator() {
+	public Iterator<Node> iterator() {
 		iterator = new JSONIterator(node);
 		return iterator;
 	}
 
-	public Iterator<Node> getIterator(BinaryOperator<Node> operator) {
+	public Iterator<Node> iterator(BinaryOperator<Node> operator) {
 		iterator = new JSONIterator(node, operator);
 		return iterator;
 	}
