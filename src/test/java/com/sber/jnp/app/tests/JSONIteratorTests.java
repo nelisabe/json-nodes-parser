@@ -8,8 +8,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class JSONIteratorTests {
 	@Test
@@ -25,13 +27,12 @@ public class JSONIteratorTests {
 				"}");
 
 		jsonHandler.read(jsonFile);
-		iterator = jsonHandler.getIterator();
+		iterator = jsonHandler.iterator();
 		while (iterator.hasNext()) {
 			stringBuilder.append(iterator.next().getName());
 		}
 		assertEquals("A", stringBuilder.toString());
 		Files.deleteIfExists(Paths.get(jsonFile));
-
 	}
 
 	@Test
@@ -67,7 +68,7 @@ public class JSONIteratorTests {
 				"}");
 
 		jsonHandler.read(jsonFile);
-		iterator = jsonHandler.getIterator();
+		iterator = jsonHandler.iterator();
 		while (iterator.hasNext()) {
 			stringBuilder.append(iterator.next().getName());
 		}
@@ -122,7 +123,7 @@ public class JSONIteratorTests {
 				"}");
 
 		jsonHandler.read(jsonFile);
-		iterator = jsonHandler.getIterator();
+		iterator = jsonHandler.iterator();
 		while (iterator.hasNext()) {
 			stringBuilder.append(iterator.next().getName());
 		}
@@ -137,7 +138,7 @@ public class JSONIteratorTests {
 		Iterator<Node>	iterator;
 
 		jsonHandler.read("BigTree.json");
-		iterator = jsonHandler.getIterator();
+		iterator = jsonHandler.iterator();
 		while (iterator.hasNext()) {
 			stringBuilder.append(iterator.next().getName());
 		}
@@ -151,7 +152,7 @@ public class JSONIteratorTests {
 		Iterator<Node>	iterator;
 
 		jsonHandler.read("BigTree.json");
-		iterator = jsonHandler.getIterator((x, y) -> {
+		iterator = jsonHandler.iterator((x, y) -> {
 			if (y.getName().compareTo(x.getName()) < 0)
 				return y;
 			return x;
@@ -169,7 +170,7 @@ public class JSONIteratorTests {
 		Iterator<Node>	iterator;
 
 		jsonHandler.read("ComplexTree.json");
-		iterator = jsonHandler.getIterator();
+		iterator = jsonHandler.iterator();
 		while (iterator.hasNext()) {
 			stringBuilder.append(iterator.next().getName());
 		}
@@ -184,12 +185,32 @@ public class JSONIteratorTests {
 		Iterator<Node>	iterator;
 
 		jsonHandler.read("ComplexTree.json");
-		iterator = jsonHandler.getIterator((x, y) ->
+		iterator = jsonHandler.iterator((x, y) ->
 				x.getValue() > y.getValue() ? x : y);
 		while (iterator.hasNext()) {
 			stringBuilder.append(iterator.next().getName());
 		}
 		assertEquals("AFOZRIAJXFZEWKBQRISQJAKLMGXOFYZWCWWFCSDJWKBNOMYIAKMOBCDKEIFG",
 				stringBuilder.toString());
+	}
+
+	@Test
+	public void	EndOfTree() throws IOException {
+		JSONHandler jsonHandler = new JSONHandler();
+		Iterator<Node> iterator;
+		String			jsonFile = Utils.createJsonFile("{\n" +
+				"  \"name\": \"A\",\n" +
+				"  \"color\": \"Blue\",\n" +
+				"  \"value\": 22,\n" +
+				"  \"children\": []\n" +
+				"}");
+
+		jsonHandler.read(jsonFile);
+		iterator = jsonHandler.iterator();
+		iterator.next().getName();
+		assertThrows(NoSuchElementException.class, () -> {
+			iterator.next().getName();
+		});
+		Files.deleteIfExists(Paths.get(jsonFile));
 	}
 }
