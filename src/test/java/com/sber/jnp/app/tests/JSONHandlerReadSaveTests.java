@@ -26,12 +26,13 @@ public class JSONHandlerReadSaveTests {
 	@Test
 	public void	WrongFileContent() throws IOException {
 		final String jsonFile = Utils.createJsonFile(
-				"{\n" +
-				"  \"name\" \"Name 1-1-2\",\n" +
-				"  \"color\": \"Green\",\n" +
-				"  \"value\": 33,\n" +
-				"  \"children\": []\n" +
-				"}");
+				"""
+						{
+						  "name" "Name 1-1-2",
+						  "color": "Green",
+						  "value": 33,
+						  "children": []
+						}""");
 		assertThrows(WrongFileException.class, () -> {
 			JSONHandler jsonHandler = new JSONHandler();
 			jsonHandler.read(jsonFile);
@@ -68,12 +69,13 @@ public class JSONHandlerReadSaveTests {
 	public void	ReadAndSaveObjectAsJson() throws IOException {
 		JSONHandler	jsonHandler = new JSONHandler();
 		String		jsonContent =
-				"{\n" +
-				"  \"name\": \"Name 1-1-2\",\n" +
-				"  \"color\": \"Green\",\n" +
-				"  \"value\": 33,\n" +
-				"  \"children\": []\n" +
-				"}";
+				"""
+						{
+						  "name": "Name 1-1-2",
+						  "color": "Green",
+						  "value": 33,
+						  "children": []
+						}""";
 		String		jsonFile = Utils.createJsonFile(jsonContent);
 		String		resultJson = Utils.createRandomJsonName();
 
@@ -149,21 +151,23 @@ public class JSONHandlerReadSaveTests {
 
 	@Test
 	public void	ExcessFields() throws IOException {
-		String		jsonContent = "{\n" +
-				"  \"name\": \"Some Name\",\n" +
-				"  \"wrong\": \"should not be there\",\n" +
-				"  \"color\": \"Blue\",\n" +
-				"  \"value\": 22,\n" +
-				"  \"excess\": 123123,\n" +
-				"  \"children\": [],\n" +
-				"  \"excess_2\": []\n" +
-				"}";
-		String		jsonContentAfterHandle = "{\n" +
-				"  \"name\": \"Some Name\",\n" +
-				"  \"color\": \"Blue\",\n" +
-				"  \"value\": 22,\n" +
-				"  \"children\": []\n" +
-				"}";
+		String		jsonContent = """
+				{
+				  "name": "Some Name",
+				  "wrong": "should not be there",
+				  "color": "Blue",
+				  "value": 22,
+				  "excess": 123123,
+				  "children": [],
+				  "excess_2": []
+				}""";
+		String		jsonContentAfterHandle = """
+				{
+				  "name": "Some Name",
+				  "color": "Blue",
+				  "value": 22,
+				  "children": []
+				}""";
 		String		jsonFile = Utils.createJsonFile(jsonContent);
 		String		resultJson = Utils.createRandomJsonName();
 		JSONHandler	jsonHandler = new JSONHandler();
@@ -177,5 +181,11 @@ public class JSONHandlerReadSaveTests {
 		Files.deleteIfExists(Paths.get(resultJson));
 	}
 
-
+	@Test
+	public void	InvalidValuesInJson() {
+		assertThrows(InvalidValueInJsonException.class, () -> {
+			JSONHandler jsonHandler = new JSONHandler();
+			jsonHandler.read("ComplexTreeErrors.json");
+		});
+	}
 }

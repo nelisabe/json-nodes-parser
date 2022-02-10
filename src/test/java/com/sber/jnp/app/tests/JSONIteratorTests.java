@@ -19,12 +19,13 @@ public class JSONIteratorTests {
 		StringBuilder	stringBuilder = new StringBuilder();
 		JSONHandler jsonHandler = new JSONHandler();
 		Iterator<Node> iterator;
-		String			jsonFile = Utils.createJsonFile("{\n" +
-				"  \"name\": \"A\",\n" +
-				"  \"color\": \"Blue\",\n" +
-				"  \"value\": 22,\n" +
-				"  \"children\": []\n" +
-				"}");
+		String			jsonFile = Utils.createJsonFile("""
+				{
+				  "name": "A",
+				  "color": "Blue",
+				  "value": 22,
+				  "children": []
+				}""");
 
 		jsonHandler.read(jsonFile);
 		iterator = jsonHandler.iterator();
@@ -40,32 +41,33 @@ public class JSONIteratorTests {
 		StringBuilder	stringBuilder = new StringBuilder();
 		JSONHandler		jsonHandler = new JSONHandler();
 		Iterator<Node>	iterator;
-		String			jsonFile = Utils.createJsonFile("{\n" +
-				"  \"name\": \"A\",\n" +
-				"  \"color\": \"Blue\",\n" +
-				"  \"value\": 22,\n" +
-				"  \"children\": [\n" +
-				"    {\n" +
-				"      \"name\": \"B\",\n" +
-				"      \"color\": \"Blue\",\n" +
-				"      \"value\": 23,\n" +
-				"      \"children\": [\n" +
-				"        {\n" +
-				"          \"name\": \"E\",\n" +
-				"          \"color\": \"Blue\",\n" +
-				"          \"value\": 50,\n" +
-				"          \"children\": []\n" +
-				"        }\n" +
-				"      ]\n" +
-				"    },\n" +
-				"    {\n" +
-				"      \"name\": \"C\",\n" +
-				"      \"color\": \"Green\",\n" +
-				"      \"value\": 24,\n" +
-				"      \"children\": []\n" +
-				"    }\n" +
-				"  ]\n" +
-				"}");
+		String			jsonFile = Utils.createJsonFile("""
+				{
+				  "name": "A",
+				  "color": "Blue",
+				  "value": 22,
+				  "children": [
+				    {
+				      "name": "B",
+				      "color": "Blue",
+				      "value": 23,
+				      "children": [
+				        {
+				          "name": "E",
+				          "color": "Blue",
+				          "value": 50,
+				          "children": []
+				        }
+				      ]
+				    },
+				    {
+				      "name": "C",
+				      "color": "Green",
+				      "value": 24,
+				      "children": []
+				    }
+				  ]
+				}""");
 
 		jsonHandler.read(jsonFile);
 		iterator = jsonHandler.iterator();
@@ -81,46 +83,47 @@ public class JSONIteratorTests {
 		StringBuilder	stringBuilder = new StringBuilder();
 		JSONHandler		jsonHandler = new JSONHandler();
 		Iterator<Node>	iterator;
-		String			jsonFile = Utils.createJsonFile("{\n" +
-				"  \"name\": \"A\",\n" +
-				"  \"color\": \"Blue\",\n" +
-				"  \"value\": 10,\n" +
-				"  \"children\": [\n" +
-				"    {\n" +
-				"      \"name\": \"F\",\n" +
-				"      \"color\": \"Blue\",\n" +
-				"      \"value\": 99,\n" +
-				"      \"children\": [\n" +
-				"        {\n" +
-				"          \"name\": \"O\",\n" +
-				"          \"color\": \"Blue\",\n" +
-				"          \"value\": 44,\n" +
-				"          \"children\": [\n" +
-				"            {\n" +
-				"              \"name\": \"Z\",\n" +
-				"              \"color\": \"Blue\",\n" +
-				"              \"value\": 12,\n" +
-				"              \"children\": [\n" +
-				"                {\n" +
-				"                  \"name\": \"R\",\n" +
-				"                  \"color\": \"Blue\",\n" +
-				"                  \"value\": 6,\n" +
-				"                  \"children\": []\n" +
-				"                },\n" +
-				"                {\n" +
-				"                  \"name\": \"I\",\n" +
-				"                  \"color\": \"Blue\",\n" +
-				"                  \"value\": 4,\n" +
-				"                  \"children\": []\n" +
-				"                }\n" +
-				"              ]\n" +
-				"            }\n" +
-				"          ]\n" +
-				"        }\n" +
-				"      ]\n" +
-				"    }\n" +
-				"  ]\n" +
-				"}");
+		String			jsonFile = Utils.createJsonFile("""
+				{
+				  "name": "A",
+				  "color": "Blue",
+				  "value": 10,
+				  "children": [
+				    {
+				      "name": "F",
+				      "color": "Blue",
+				      "value": 99,
+				      "children": [
+				        {
+				          "name": "O",
+				          "color": "Blue",
+				          "value": 44,
+				          "children": [
+				            {
+				              "name": "Z",
+				              "color": "Blue",
+				              "value": 12,
+				              "children": [
+				                {
+				                  "name": "R",
+				                  "color": "Blue",
+				                  "value": 6,
+				                  "children": []
+				                },
+				                {
+				                  "name": "I",
+				                  "color": "Blue",
+				                  "value": 4,
+				                  "children": []
+				                }
+				              ]
+				            }
+				          ]
+				        }
+				      ]
+				    }
+				  ]
+				}""");
 
 		jsonHandler.read(jsonFile);
 		iterator = jsonHandler.iterator();
@@ -198,12 +201,13 @@ public class JSONIteratorTests {
 	public void	EndOfTree() throws IOException {
 		JSONHandler jsonHandler = new JSONHandler();
 		Iterator<Node> iterator;
-		String			jsonFile = Utils.createJsonFile("{\n" +
-				"  \"name\": \"A\",\n" +
-				"  \"color\": \"Blue\",\n" +
-				"  \"value\": 22,\n" +
-				"  \"children\": []\n" +
-				"}");
+		String			jsonFile = Utils.createJsonFile("""
+				{
+				  "name": "A",
+				  "color": "Blue",
+				  "value": 22,
+				  "children": []
+				}""");
 
 		jsonHandler.read(jsonFile);
 		iterator = jsonHandler.iterator();
