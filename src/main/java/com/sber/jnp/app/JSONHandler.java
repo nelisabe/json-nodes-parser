@@ -11,7 +11,6 @@ import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.function.BinaryOperator;
 
-
 public class JSONHandler {
 	private Node    					node;
 	private final Gson					gson;
@@ -74,7 +73,7 @@ public class JSONHandler {
 		}
 	}
 
-	private void	checkJsonWasRead() throws NoJsonObjectReadException {
+	private void	checkJsonWasRead() {
 		if (node == null)
 			throw new NoJsonObjectReadException();
 	}
