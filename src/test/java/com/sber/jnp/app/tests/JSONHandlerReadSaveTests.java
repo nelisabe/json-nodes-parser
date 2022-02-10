@@ -146,4 +146,36 @@ public class JSONHandlerReadSaveTests {
 			jsonHandler.getNode("A/");
 		});
 	}
+
+	@Test
+	public void	ExcessFields() throws IOException {
+		String		jsonContent = "{\n" +
+				"  \"name\": \"Some Name\",\n" +
+				"  \"wrong\": \"should not be there\",\n" +
+				"  \"color\": \"Blue\",\n" +
+				"  \"value\": 22,\n" +
+				"  \"excess\": 123123,\n" +
+				"  \"children\": [],\n" +
+				"  \"excess_2\": []\n" +
+				"}";
+		String		jsonContentAfterHandle = "{\n" +
+				"  \"name\": \"Some Name\",\n" +
+				"  \"color\": \"Blue\",\n" +
+				"  \"value\": 22,\n" +
+				"  \"children\": []\n" +
+				"}";
+		String		jsonFile = Utils.createJsonFile(jsonContent);
+		String		resultJson = Utils.createRandomJsonName();
+		JSONHandler	jsonHandler = new JSONHandler();
+
+		jsonHandler.read(jsonFile);
+		jsonHandler.save(resultJson);
+		assertTrue(Files.exists(Paths.get(resultJson)));
+		assertEquals(jsonContentAfterHandle,
+				new String(Files.readAllBytes(Paths.get(resultJson))));
+		Files.deleteIfExists(Paths.get(jsonFile));
+		Files.deleteIfExists(Paths.get(resultJson));
+	}
+
+
 }
