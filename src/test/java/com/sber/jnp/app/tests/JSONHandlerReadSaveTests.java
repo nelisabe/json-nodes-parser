@@ -116,16 +116,16 @@ public class JSONHandlerReadSaveTests {
 			jsonHandler.getNode("");
 		});
 		assertThrows(InvalidInternalJsonPathException.class, () -> {
-			jsonHandler.getNode("A/D/P");
+			jsonHandler.getNode("A/D/P/");
 		});
 		assertThrows(InvalidInternalJsonPathException.class, () -> {
-			jsonHandler.getNode("O/A/A");
+			jsonHandler.getNode("O/A/A/");
 		});
 		assertThrows(InvalidInternalJsonPathException.class, () -> {
 			jsonHandler.getNode("/A/D/P");
 		});
 		assertThrows(InvalidInternalJsonPathException.class, () -> {
-			jsonHandler.getNode("/A/W/F/C/D/O");
+			jsonHandler.getNode("/A/W/F/C/D/O/");
 		});
 	}
 
