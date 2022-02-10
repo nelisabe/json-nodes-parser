@@ -2,7 +2,6 @@ package com.sber.jnp.app.tests;
 
 import com.sber.jnp.app.JSONHandler;
 import com.sber.jnp.app.Node;
-import com.sber.jnp.app.exceptions.InvalidInternalJsonPathException;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
