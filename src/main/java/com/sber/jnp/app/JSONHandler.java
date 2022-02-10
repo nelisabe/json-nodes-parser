@@ -80,14 +80,13 @@ public class JSONHandler {
 		while (it.hasNext()) {
 			current = it.next();
 			if ((current.getValue() < 0 || current.getValue() > 100) && (error = true))
-				System.err.println("Invalid value. " +
-						"Allowed values: 0 - 100. Node: " +
-						it.getCurrentNodePath());
+				logger.error("Invalid value in node: " +
+						it.getCurrentNodePath() +
+						". Allowed values: 0 - 100.");
 			if (current.getColor() == null && (error = true))
-				System.err.println("Invalid color. " +
-						"Allowed colors: Red, Green, Blue. Node: " +
-						it.getCurrentNodePath()
-				);
+				logger.error("Invalid value in node: " +
+						it.getCurrentNodePath() +
+						"Allowed colors: Red, Green, Blue.");
 		}
 		if (error)
 			throw new InvalidValueInJsonException("Errors occurs in json file. Check logs!");
