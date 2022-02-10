@@ -114,21 +114,16 @@ public class JSONHandlerReadSaveTests {
 		JSONHandler		jsonHandler = new JSONHandler();
 
 		jsonHandler.read("ComplexTree.json");
-		assertThrows(InvalidInternalJsonPathException.class, () -> {
-			jsonHandler.getNode("");
-		});
-		assertThrows(InvalidInternalJsonPathException.class, () -> {
-			jsonHandler.getNode("A/D/P/");
-		});
-		assertThrows(InvalidInternalJsonPathException.class, () -> {
-			jsonHandler.getNode("O/A/A/");
-		});
-		assertThrows(InvalidInternalJsonPathException.class, () -> {
-			jsonHandler.getNode("/A/D/P");
-		});
-		assertThrows(InvalidInternalJsonPathException.class, () -> {
-			jsonHandler.getNode("/A/W/F/C/D/O/");
-		});
+		assertThrows(InvalidInternalJsonPathException.class, () ->
+				jsonHandler.getNode(""));
+		assertThrows(InvalidInternalJsonPathException.class, () ->
+			jsonHandler.getNode("A/D/P/"));
+		assertThrows(InvalidInternalJsonPathException.class, () ->
+			jsonHandler.getNode("O/A/A/"));
+		assertThrows(InvalidInternalJsonPathException.class, () ->
+			jsonHandler.getNode("/A/D/P"));
+		assertThrows(InvalidInternalJsonPathException.class, () ->
+			jsonHandler.getNode("/A/W/F/C/D/O/"));
 	}
 
 	@Test
