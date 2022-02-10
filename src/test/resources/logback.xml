@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration debug="false">
+    <appender name="FileInfo" class="ch.qos.logback.core.FileAppender">
+        <file>log.info</file>
+        <append>true</append>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>TEST %d{yyyy-MM-dd HH:mm:ss} %-5p%c{100}:%L - %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FileError" class="ch.qos.logback.core.FileAppender">
+        <file>log.error</file>
+        <append>true</append>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>TEST %d{yyyy-MM-dd HH:mm:ss} %-5p%c{100}:%L - %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FileDebug" class="ch.qos.logback.core.FileAppender">
+        <file>log.debug</file>
+        <append>true</append>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>TEST %d{yyyy-MM-dd HH:mm:ss} %-5p%c{100}:%L - %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="all">
+        <appender-ref ref="FileInfo" />
+        <appender-ref ref="FileDebug"/>
+        <appender-ref ref="FileError"/>
+    </root>
+</configuration>
