@@ -1,0 +1,389 @@
+{
+  "name": "A",
+  "color": "Blue",
+  "value": 10,
+  "children": [
+    {
+      "name": "F",
+      "color": "Blue",
+      "value": 99,
+      "children": [
+        {
+          "name": "O",
+          "color": "Blue",
+          "value": 44,
+          "children": [
+            {
+              "name": "Z",
+              "color": "Blue",
+              "value": 71,
+              "children": [
+                {
+                  "name": "R",
+                  "color": "Blue",
+                  "value": 6,
+                  "children": []
+                },
+                {
+                  "name": "I",
+                  "color": "Blue",
+                  "value": 4,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "A",
+          "color": "Blue",
+          "value": 20,
+          "children": [
+            {
+              "name": "J",
+              "color": "Blue",
+              "value": 11,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "B",
+          "color": "Blue",
+          "value": 10,
+          "children": [
+            {
+              "name": "Q",
+              "color": "Blue",
+              "value": 1,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "X",
+          "color": "Blue",
+          "value": 12,
+          "children": [
+            {
+              "name": "K",
+              "color": "Blue",
+              "value": 7,
+              "children": []
+            },
+            {
+              "name": "F",
+              "color": "Blue",
+              "value": 123,
+              "children": [
+                {
+                  "name": "W",
+                  "color": "Blue",
+                  "value": 31,
+                  "children": []
+                },
+                {
+                  "name": "Z",
+                  "color": "Blue",
+                  "value": 65,
+                  "children": []
+                },
+                {
+                  "name": "E",
+                  "color": "Blue",
+                  "value": 40,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "B",
+      "color": "Blue",
+      "value": 15,
+      "children": [
+        {
+          "name": "C",
+          "color": "Blue",
+          "value": 20,
+          "children": [
+            {
+              "name": "D",
+              "color": "Blue",
+              "value": 99,
+              "children": [
+                {
+                  "name": "K",
+                  "color": "Blue",
+                  "value": 43,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "E",
+              "color": "Blue",
+              "value": 13,
+              "children": [
+                {
+                  "name": "I",
+                  "color": "Blue",
+                  "value": 97,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "F",
+              "color": "Blue",
+              "value": 11,
+              "children": [
+                {
+                  "name": "G",
+                  "color": "Blue",
+                  "value": 3,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "R",
+      "color": "Blue",
+      "value": 79,
+      "children": [
+        {
+          "name": "I",
+          "color": "Blue",
+          "value": 28,
+          "children": [
+            {
+              "name": "S",
+              "color": "Blue",
+              "value": 34,
+              "children": [
+                {
+                  "name": "W",
+                  "color": "Blue",
+                  "value": 11,
+                  "children": []
+                },
+                {
+                  "name": "Q",
+                  "color": "Blue",
+                  "value": 98,
+                  "children": []
+                },
+                {
+                  "name": "J",
+                  "color": "Blue",
+                  "value": 28,
+                  "children": [
+                    {
+                      "name": "A",
+                      "color": "Blue",
+                      "value": 45,
+                      "children": [
+                        {
+                          "name": "K",
+                          "color": "Blue",
+                          "value": 79,
+                          "children": [
+                            {
+                              "name": "W",
+                              "color": "Blue",
+                              "value": 12,
+                              "children": []
+                            },
+                            {
+                              "name": "Z",
+                              "color": "Blue",
+                              "value": 36,
+                              "children": []
+                            },
+                            {
+                              "name": "L",
+                              "color": "Blue",
+                              "value": 85,
+                              "children": []
+                            },
+                            {
+                              "name": "M",
+                              "color": "Blue",
+                              "value": 79,
+                              "children": []
+                            },
+                            {
+                              "name": "G",
+                              "color": "Blue",
+                              "value": 41,
+                              "children": [
+                                {
+                                  "name": "X",
+                                  "color": "Blue",
+                                  "value": 44,
+                                  "children": [
+                                    {
+                                      "name": "O",
+                                      "color": "Blue",
+                                      "value": 37,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "F",
+                                      "color": "Blue",
+                                      "value": 15,
+                                      "children": [
+                                        {
+                                          "name": "Y",
+                                          "color": "Blue",
+                                          "value": 56,
+                                          "children": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "C",
+                      "color": "Blue",
+                      "value": 31,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "W",
+      "color": "Blue",
+      "value": 65,
+      "children": [
+        {
+          "name": "K",
+          "color": "Blue",
+          "value": 12,
+          "children": []
+        },
+        {
+          "name": "F",
+          "color": "Blue",
+          "value": 27,
+          "children": [
+            {
+              "name": "C",
+              "color": "Blue",
+              "value": 34,
+              "children": [
+                {
+                  "name": "S",
+                  "color": "Blue",
+                  "value": 25,
+                  "children": []
+                },
+                {
+                  "name": "A",
+                  "color": "Blue",
+                  "value": 1,
+                  "children": []
+                },
+                {
+                  "name": "D",
+                  "color": "Blue",
+                  "value": 7,
+                  "children": [
+                    {
+                      "name": "I",
+                      "color": "Blue",
+                      "value": 6,
+                      "children": []
+                    },
+                    {
+                      "name": "Y",
+                      "color": "Blue",
+                      "value": 7,
+                      "children": []
+                    },
+                    {
+                      "name": "W",
+                      "color": "Blue",
+                      "value": 15,
+                      "children": [
+                        {
+                          "name": "K",
+                          "color": "Orange",
+                          "value": 34,
+                          "children": []
+                        },
+                        {
+                          "name": "B",
+                          "color": "Blue",
+                          "value": 2,
+                          "children": [
+                            {
+                              "name": "M",
+                              "color": "Blue",
+                              "value": 3,
+                              "children": []
+                            },
+                            {
+                              "name": "N",
+                              "color": "Blue",
+                              "value": 90,
+                              "children": []
+                            },
+                            {
+                              "name": "O",
+                              "color": "Blue",
+                              "value": 15,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "J",
+                      "color": "Blue",
+                      "value": 95,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "M",
+      "color": "Blue",
+      "value": 34,
+      "children": [
+        {
+          "name": "O",
+          "color": "Blue",
+          "value": -10,
+          "children": []
+        }
+      ]
+    }
+  ]
+}
