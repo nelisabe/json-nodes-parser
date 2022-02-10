@@ -10,6 +10,7 @@ class JSONIterator implements Iterator<Node> {
 	private final Stack<Node> 			nodesQueue;
 	private final HashSet<Node> 		passedNodes;
 	private final BinaryOperator<Node> 	operator;
+	private String						currentNodePath;
 
 	public JSONIterator(Node firstNode, BinaryOperator<Node> operator) {
 		this.operator = operator;
@@ -29,6 +30,8 @@ class JSONIterator implements Iterator<Node> {
 		if (nodesQueue.empty())
 			throw new NoSuchElementException();
 		current = nodesQueue.peek();
+		if (!passedNodes.contains(current))
+			setCurrentNodePath();
 		if (wasAllChildrenPassed(current))
 			nodesQueue.pop();
 		else
@@ -58,5 +61,19 @@ class JSONIterator implements Iterator<Node> {
 				result = result == null ? child : operator.apply(result, child);
 		}
 		return result;
+	}
+
+	private void	setCurrentNodePath() {
+		StringBuilder	stringBuilder = new StringBuilder();
+
+		nodesQueue.forEach(node -> {
+			stringBuilder.append(node.getName());
+			stringBuilder.append("/");
+		});
+		currentNodePath = stringBuilder.toString();
+	}
+
+	public String	getCurrentNodePath() {
+		return currentNodePath;
 	}
 }
