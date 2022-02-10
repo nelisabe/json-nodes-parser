@@ -88,7 +88,7 @@ public class JSONHandlerReadSaveTests {
 	}
 
 	@Test
-	public void	GetIteratorByPath() {
+	public void	GetNodeByPath() {
 		JSONHandler		jsonHandler = new JSONHandler();
 		Node			node;
 
@@ -108,7 +108,7 @@ public class JSONHandlerReadSaveTests {
 	}
 
 	@Test
-	public void	WrongIteratorPath() {
+	public void	WrongNodePath() {
 		JSONHandler		jsonHandler = new JSONHandler();
 
 		jsonHandler.read("ComplexTree.json");
