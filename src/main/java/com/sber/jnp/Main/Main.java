@@ -25,7 +25,7 @@ public class Main {
 		jsonHandler.read(jsonFilePath);
 		iterator = jsonHandler.iterator();
 		while (iterator.hasNext()) {
-			System.out.print(iterator.next().getName());
+			System.out.print(iterator.next().getName() + " ");
 		}
 		System.out.println();
 		jsonHandler.save("test.json");
