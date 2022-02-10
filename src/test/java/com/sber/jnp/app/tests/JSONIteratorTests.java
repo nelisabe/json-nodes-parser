@@ -212,9 +212,8 @@ public class JSONIteratorTests {
 		jsonHandler.read(jsonFile);
 		iterator = jsonHandler.iterator();
 		iterator.next().getName();
-		assertThrows(NoSuchElementException.class, () -> {
-			iterator.next().getName();
-		});
+		assertThrows(NoSuchElementException.class, () ->
+				iterator.next().getName());
 		Files.deleteIfExists(Paths.get(jsonFile));
 	}
 }
