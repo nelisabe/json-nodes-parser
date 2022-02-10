@@ -10,6 +10,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.function.BinaryOperator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JSONHandler {
 	private Node    					node;
@@ -17,18 +19,21 @@ public class JSONHandler {
 	private JSONIterator				iterator;
 	private final BinaryOperator<Node>	defaultOperator;
 
+	private static final Logger logger = LoggerFactory.getLogger(JSONHandler.class);
+
 	public JSONHandler() {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();
 		gson = gsonBuilder.create();
 		defaultOperator = (x, y) -> x.getValue() < y.getValue() ? x : y;
+		logger.info("JSONHandler object created");
 	}
 
 	public void  	read(String jsonFilePath) {
 		String  jsonString;
 
 		jsonString = readJsonFile(jsonFilePath);
-
+		logger.info("Input file read");
 		if (isFileEmpty(jsonString))
 			throw new WrongFileException("No content in file");
 		try {
@@ -36,7 +41,9 @@ public class JSONHandler {
 		} catch (Exception exception) {
 			throw new WrongFileException(exception);
 		}
+		logger.info("Json file converted to object");
 		checkFieldsValues();
+		logger.info("Json object validated");
 	}
 
 	private String	readJsonFile(String jsonFilePath) {
