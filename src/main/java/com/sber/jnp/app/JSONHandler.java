@@ -36,6 +36,7 @@ public class JSONHandler {
 		} catch (Exception exception) {
 			throw new WrongFileException(exception);
 		}
+		checkFieldsValues();
 	}
 
 	private String	readJsonFile(String jsonFilePath) {
@@ -62,6 +63,27 @@ public class JSONHandler {
 
 		noNewLinesContent = fileContent.replaceAll("\n", "");
 		return noNewLinesContent.equals("");
+	}
+
+	private void	checkFieldsValues() {
+		JSONIterator 	it = new JSONIterator(node, defaultOperator);
+		Node			current;
+		boolean			error = false;
+
+		while (it.hasNext()) {
+			current = it.next();
+			if ((current.getValue() < 0 || current.getValue() > 100) && (error = true))
+				System.err.println("Invalid value. " +
+						"Allowed values: 0 - 100. Node: " +
+						it.getCurrentNodePath());
+			if (current.getColor() == null && (error = true))
+				System.err.println("Invalid color. " +
+						"Allowed colors: Red, Green, Blue. Node: " +
+						it.getCurrentNodePath()
+				);
+		}
+		if (error)
+			throw new InvalidValueInJsonException("Errors occurs in json file. Check logs!");
 	}
 
 	public void 	save(String jsonFilePath) {
