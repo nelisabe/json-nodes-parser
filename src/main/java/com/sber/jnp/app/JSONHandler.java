@@ -13,6 +13,10 @@ import java.util.function.BinaryOperator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Json tree handler class.
+ * @version 0.1
+ */
 public class JSONHandler {
 	private Node    					node;
 	private final Gson					gson;
@@ -29,6 +33,10 @@ public class JSONHandler {
 		logger.info("JSONHandler object created");
 	}
 
+	/**
+	 * Tries to read input <b>jsonFilePath</b> file and convert in to {@link Node} object.
+	 * @param jsonFilePath - path to json file to handle.
+	 */
 	public void 	read(String jsonFilePath) {
 		try {
 			readImpl(jsonFilePath);
@@ -107,6 +115,10 @@ public class JSONHandler {
 				exception.getStackTrace());
 	}
 
+	/**
+	 * Tries to create <b>jsonFilePath</b> outfile and save converted {@link Node} object into it.
+	 * @param jsonFilePath - path to create json file.
+	 */
 	public void 	save(String jsonFilePath) {
 		try	{
 			saveImpl(jsonFilePath);
@@ -144,6 +156,11 @@ public class JSONHandler {
 		logger.debug("Json object wrote to {}", jsonFilePath);
 	}
 
+	/**
+	 * Creates an {@link Iterator<Node>} object, that  can iterate through json tree object.
+	 * @return {@link Iterator<Node>} object.
+	 * with default behavior.
+	 */
 	public Iterator<Node>	iterator() {
 		try {
 			checkJsonWasRead();
@@ -156,6 +173,12 @@ public class JSONHandler {
 		return iterator;
 	}
 
+	/**
+	 * Creates an {@link Iterator<Node>} object, that  can iterate through json tree object
+	 * with custom behavior.
+	 * @param operator - {@link BinaryOperator<Node>} describes special rule to iterate through tree.
+	 * @return {@link Iterator<Node>} object.
+	 */
 	public Iterator<Node>	iterator(BinaryOperator<Node> operator) {
 		try {
 			checkJsonWasRead();
@@ -168,6 +191,11 @@ public class JSONHandler {
 		return iterator;
 	}
 
+	/**
+	 * Finds {@link Node} node in json tree that corresponds to specified path.
+	 * @param path - NodeName1/NodeName2/NodeName3/ form path to find node.
+	 * @return {@link Node} object.
+	 */
 	public Node		getNode(String path) {
 		try {
 			return getNodeImpl(path);
