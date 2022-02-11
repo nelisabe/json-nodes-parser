@@ -2,21 +2,24 @@ package com.sber.jnp.app;
 
 import java.util.ArrayList;
 
+/**
+ * Class represents one Node in json tree.
+ */
 public class Node {
 	private String  		name;
-	private Color   		color; // red, green, blue
-	private int     		value; // 0 - 100
+	private Color   		color;
+	private int     		value;
 	private ArrayList<Node> children;
 
-	public String getName() {
+	public String	getName() {
 		return name;
 	}
 
-	public int getValue() {
+	public int 		getValue() {
 		return value;
 	}
 
-	public Color getColor() {
+	public Color	getColor() {
 		return color;
 	}
 
