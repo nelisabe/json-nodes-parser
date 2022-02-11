@@ -1,15 +1,38 @@
 package com.sber.jnp.app;
 
+import com.sber.jnp.app.exceptions.InvalidNodeValueException;
+
 import java.util.ArrayList;
 
 /**
  * Class represents one Node in json tree.
  */
 public class Node {
-	private String  		name;
-	private Color   		color;
-	private int     		value;
-	private ArrayList<Node> children;
+	private final String  		name;
+	private final Color   		color;
+	private final int     		value;
+	private final ArrayList<Node> children;
+
+	public Node(String name, Color color, int value) {
+		checkIntValueValid(value);
+		this.name = name;
+		this.color = color;
+		this.value = value;
+		this.children = new ArrayList<>();
+	}
+
+	public Node(String name, Color color, int value, ArrayList<Node> children) {
+		checkIntValueValid(value);
+		this.name = name;
+		this.color = color;
+		this.value = value;
+		this.children = children;
+	}
+
+	private void	checkIntValueValid(int value) {
+		if (value < 0 || value > 100)
+			throw new InvalidNodeValueException("Invalid int value.");
+	}
 
 	public String	getName() {
 		return name;
