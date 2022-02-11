@@ -216,17 +216,30 @@ public class JSONHandlerReadSaveTests {
 	@Test
 	public void	AddNewNode() {
 		JSONHandler jsonHandler = new JSONHandler();
+		Node node;
 
 		jsonHandler.read("BigTree.json");
 		jsonHandler.add("C", Color.Blue, 43, "A/H/Z/");
 		assertEquals("C", jsonHandler.getNode("A/H/Z/C/").getName());
+
+		node = new Node("V", Color.Blue, 43);
+		jsonHandler.add(node, "A/H/Z/C/");
+		assertEquals("V", jsonHandler.getNode("A/H/Z/C/V/").getName());
+	}
+
+	@Test
+	public void	AddNewNodeExceptions() {
+		JSONHandler jsonHandler = new JSONHandler();
+		Node node = new Node("V", Color.Blue, 43);
+
+		assertThrows(NoJsonObjectReadException.class, () ->
+				jsonHandler.add("Name", Color.Red, 50, "A/"));
+		assertThrows(NoJsonObjectReadException.class, () ->
+				jsonHandler.add(node, "A/"));
+		jsonHandler.read("BigTree.json");
 		assertThrows(InvalidNodeValueException.class, () ->
 				jsonHandler.add("Name", Color.Red, -10, "A/H/Z/C/"));
 		assertThrows(InvalidInternalJsonPathException.class, () ->
-				jsonHandler.add("Name", Color.Red, 100, "A/H/R/C/"));
-
-		Node node = new Node("V", Color.Blue, 43);
-		jsonHandler.add(node, "A/H/Z/C/");
-		assertEquals("V", jsonHandler.getNode("A/H/Z/C/V/").getName());
+				jsonHandler.add(node, "A/H/R/C/"));
 	}
 }
