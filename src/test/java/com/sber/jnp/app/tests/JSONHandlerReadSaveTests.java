@@ -6,6 +6,7 @@ import com.sber.jnp.app.exceptions.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -131,6 +132,9 @@ public class JSONHandlerReadSaveTests {
 		assertThrows(NoJsonObjectReadException.class, () -> {
 			JSONHandler jsonHandler = new JSONHandler();
 			jsonHandler.iterator();
+		});
+		assertThrows(NoJsonObjectReadException.class, () -> {
+			JSONHandler jsonHandler = new JSONHandler();
 			jsonHandler.iterator((x, y) ->
 					x.getValue() < y.getValue() ? x : y);
 		});
@@ -182,5 +186,30 @@ public class JSONHandlerReadSaveTests {
 			JSONHandler jsonHandler = new JSONHandler();
 			jsonHandler.read("ComplexTreeErrors.json");
 		});
+	}
+
+	@Test
+	public void	NodeCreation() {
+		Node node;
+		Node node2;
+
+		node = new Node("Name", Color.Red, 50);
+		assertEquals("Name", node.getName());
+		assertEquals(Color.Red, node.getColor());
+		assertEquals(50, node.getValue());
+		assertEquals(0, node.getChildren().size());
+
+		ArrayList<Node>	children = new ArrayList<>();
+		children.add(node);
+		node2 = new Node("Name2", Color.Green, 60, children);
+		assertEquals(node, node2.getChildren().get(0));
+
+		assertThrows(InvalidNodeValueException.class, () ->
+				new Node("Name3", Color.Red, -12));
+		assertThrows(InvalidNodeValueException.class, () ->
+				new Node("Name3", Color.Red, 120));
+
+		assertEquals("name: Name, value: 50, color: Red",
+				node.toString());
 	}
 }
