@@ -29,11 +29,19 @@ public class JSONHandler {
 		logger.info("JSONHandler object created");
 	}
 
-	public void  	read(String jsonFilePath) {
+	public void 	read(String jsonFilePath) {
+		try {
+			readImpl(jsonFilePath);
+		} catch (Exception exception) {
+			logException(exception);
+			throw exception;
+		}
+	}
+
+	private void  	readImpl(String jsonFilePath) {
 		String  jsonString;
 
 		jsonString = readJsonFile(jsonFilePath);
-		logger.info("Input file read");
 		if (isFileEmpty(jsonString))
 			throw new WrongFileException("No content in file");
 		try {
@@ -41,9 +49,9 @@ public class JSONHandler {
 		} catch (Exception exception) {
 			throw new WrongFileException(exception);
 		}
-		logger.info("Json file converted to object");
+		logger.debug("Json file converted to object");
 		checkFieldsValues();
-		logger.info("Json object validated");
+		logger.info("Json object created");
 	}
 
 	private String	readJsonFile(String jsonFilePath) {
@@ -55,6 +63,7 @@ public class JSONHandler {
 		} catch (IOException exception) {
 			throw new IOErrorReadingJsonException(exception);
 		}
+		logger.debug("Input file {} read", jsonFilePath);
 		return json;
 	}
 
@@ -63,6 +72,7 @@ public class JSONHandler {
 
 		if (!jsonFilePath.endsWith(".json"))
 			throw new WrongFileException(message);
+		logger.debug("Input file extension validated");
 	}
 
 	private boolean isFileEmpty(String fileContent) {
@@ -80,25 +90,40 @@ public class JSONHandler {
 		while (it.hasNext()) {
 			current = it.next();
 			if ((current.getValue() < 0 || current.getValue() > 100) && (error = true))
-				logger.error("Invalid value in node: " +
-						it.getCurrentNodePath() +
-						". Allowed values: 0 - 100.");
+				logger.error("Invalid value in node: {}. Allowed values: 0 - 100.",
+						it.getCurrentNodePath());
 			if (current.getColor() == null && (error = true))
-				logger.error("Invalid value in node: " +
-						it.getCurrentNodePath() +
-						"Allowed colors: Red, Green, Blue.");
+				logger.error("Invalid value in node: {}. Allowed colors: Red, Green, Blue.",
+						it.getCurrentNodePath());
 		}
 		if (error)
 			throw new InvalidValueInJsonException("Errors occurs in json file. Check logs!");
+		logger.debug("Json content validated");
+	}
+
+	private void	logException(Exception exception) {
+		logger.error("Exception: {} \n\tStack trace: {}",
+				exception.getMessage(),
+				exception.getStackTrace());
 	}
 
 	public void 	save(String jsonFilePath) {
+		try	{
+			saveImpl(jsonFilePath);
+		} catch (Exception exception) {
+			logException(exception);
+			throw exception;
+		}
+	}
+
+	private void 	saveImpl(String jsonFilePath) {
 		checkJsonWasRead();
 		try {
 			saveJsonToFile(jsonFilePath);
 		} catch (IOException exception) {
 			throw new IOErrorWritingJsonFileException(exception);
 		}
+		logger.info("Json object saved into file: {}", jsonFilePath);
 	}
 
 	private void	checkJsonWasRead() {
@@ -109,27 +134,50 @@ public class JSONHandler {
 	private void	saveJsonToFile(String jsonFilePath) throws IOException {
 		try {
 			Files.createFile(Paths.get(jsonFilePath));
+			logger.debug("{} outfile created", jsonFilePath);
 		} catch (FileAlreadyExistsException exception) {
 			throw new FileAlreadyExistsException("file already exists: " + jsonFilePath);
 		}
 		PrintWriter out = new PrintWriter(jsonFilePath);
 		gson.toJson(node, out);
 		out.close();
+		logger.debug("Json object wrote to {}", jsonFilePath);
 	}
 
 	public Iterator<Node>	iterator() {
-		checkJsonWasRead();
+		try {
+			checkJsonWasRead();
+		} catch (NoJsonObjectReadException exception) {
+			logException(exception);
+			throw exception;
+		}
 		iterator = new JSONIterator(node, defaultOperator);
+		logger.info("Iterator created (default)");
 		return iterator;
 	}
 
 	public Iterator<Node>	iterator(BinaryOperator<Node> operator) {
-		checkJsonWasRead();
+		try {
+			checkJsonWasRead();
+		} catch (NoJsonObjectReadException exception) {
+			logException(exception);
+			throw exception;
+		}
 		iterator = new JSONIterator(node, operator);
+		logger.info("Iterator created (custom)");
 		return iterator;
 	}
 
-	public Node 			getNode(String path) {
+	public Node		getNode(String path) {
+		try {
+			return getNodeImpl(path);
+		} catch (Exception exception) {
+			logException(exception);
+			throw exception;
+		}
+	}
+
+	private Node 	getNodeImpl(String path) {
 		StringBuilder	currentPath = new StringBuilder();
 		Node			startNode;
 
@@ -137,6 +185,7 @@ public class JSONHandler {
 		startNode = findSpecifiedPath(currentPath, path);
 		if (!currentPath.toString().equals(path))
 			throw new InvalidInternalJsonPathException(path);
+		logger.info("{} node found by getNode(path)", path);
 		return startNode;
 	}
 
