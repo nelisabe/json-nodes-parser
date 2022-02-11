@@ -192,6 +192,43 @@ public class JSONHandler {
 	}
 
 	/**
+	 * Adds new {@link Node} object to children of specified node.
+	 * @param newNode - new node.
+	 * @param path - path to find node where new node will add.
+	 */
+	public void 	add(Node newNode, String path) {
+		Node	store;
+
+		store = getNode(path);
+		store.getChildren().add(newNode);
+	}
+
+	/**
+	 * Adds new {@link Node} object to children of specified node.
+	 * @param name - name of new node.
+	 * @param color - color of new node.
+	 * @param value - value of new node.
+	 * @param path - path to find node where new node will add.
+	 */
+	public void 	add(String name, Color color, int value, String path) {
+		try {
+			addImpl(name, color, value, path);
+		} catch (Exception exception) {
+			logException(exception);
+			throw exception;
+		}
+	}
+
+	private void	addImpl(String name, Color color, int value, String path) {
+		Node	newNode;
+		Node	store;
+
+		newNode = new Node(name, color, value);
+		store = getNodeImpl(path);
+		store.getChildren().add(newNode);
+	}
+
+	/**
 	 * Finds {@link Node} node in json tree that corresponds to specified path.
 	 * @param path - NodeName1/NodeName2/NodeName3/ form path to find node.
 	 * @return {@link Node} object.
