@@ -252,6 +252,8 @@ public class JSONHandler {
 
 		if (checkJsonWasNotRead())
 			throw new NoJsonObjectReadException();
+		if (!path.endsWith("/"))
+			path += '/';
 		startNode = findSpecifiedPath(currentPath, path);
 		if (!currentPath.toString().equals(path))
 			throw new InvalidInternalJsonPathException(path);

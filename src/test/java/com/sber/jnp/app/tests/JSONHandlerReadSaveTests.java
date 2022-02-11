@@ -102,10 +102,10 @@ public class JSONHandlerReadSaveTests {
 		node = jsonHandler.getNode("A/W/F/C/D/W/B/");
 		assertEquals("B", node.getName());
 		assertEquals(2, node.getValue());
-		node = jsonHandler.getNode("A/M/O/");
+		node = jsonHandler.getNode("A/M/O");
 		assertEquals("O", node.getName());
 		assertEquals(25, node.getValue());
-		node = jsonHandler.getNode("A/");
+		node = jsonHandler.getNode("A");
 		assertEquals("A", node.getName());
 		assertEquals(10, node.getValue());
 	}
