@@ -44,6 +44,16 @@ class JSONIterator implements Iterator<Node> {
 		return current;
 	}
 
+	private void	setCurrentNodePath() {
+		StringBuilder	stringBuilder = new StringBuilder();
+
+		nodesQueue.forEach(node -> {
+			stringBuilder.append(node.getName());
+			stringBuilder.append("/");
+		});
+		currentNodePath = stringBuilder.toString();
+	}
+
 	private boolean wasAllChildrenPassed(Node node) {
 		for (Node child : node.getChildren()) {
 			if (!passedNodes.contains(child))
@@ -61,16 +71,6 @@ class JSONIterator implements Iterator<Node> {
 				result = result == null ? child : operator.apply(result, child);
 		}
 		return result;
-	}
-
-	private void	setCurrentNodePath() {
-		StringBuilder	stringBuilder = new StringBuilder();
-
-		nodesQueue.forEach(node -> {
-			stringBuilder.append(node.getName());
-			stringBuilder.append("/");
-		});
-		currentNodePath = stringBuilder.toString();
 	}
 
 	public String	getCurrentNodePath() {
