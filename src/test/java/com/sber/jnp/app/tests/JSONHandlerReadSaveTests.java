@@ -212,4 +212,21 @@ public class JSONHandlerReadSaveTests {
 		assertEquals("name: Name, value: 50, color: Red",
 				node.toString());
 	}
+
+	@Test
+	public void	AddNewNode() {
+		JSONHandler jsonHandler = new JSONHandler();
+
+		jsonHandler.read("BigTree.json");
+		jsonHandler.add("C", Color.Blue, 43, "A/H/Z/");
+		assertEquals("C", jsonHandler.getNode("A/H/Z/C/").getName());
+		assertThrows(InvalidNodeValueException.class, () ->
+				jsonHandler.add("Name", Color.Red, -10, "A/H/Z/C/"));
+		assertThrows(InvalidInternalJsonPathException.class, () ->
+				jsonHandler.add("Name", Color.Red, 100, "A/H/R/C/"));
+
+		Node node = new Node("V", Color.Blue, 43);
+		jsonHandler.add(node, "A/H/Z/C/");
+		assertEquals("V", jsonHandler.getNode("A/H/Z/C/V/").getName());
+	}
 }
