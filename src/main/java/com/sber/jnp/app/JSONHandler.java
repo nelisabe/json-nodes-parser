@@ -129,7 +129,8 @@ public class JSONHandler {
 	}
 
 	private void 	saveImpl(String jsonFilePath) {
-		checkJsonWasRead();
+		if (checkJsonWasNotRead())
+			throw new NoJsonObjectReadException();
 		try {
 			saveJsonToFile(jsonFilePath);
 		} catch (IOException exception) {
@@ -138,9 +139,8 @@ public class JSONHandler {
 		logger.info("Json object saved into file: {}", jsonFilePath);
 	}
 
-	private void	checkJsonWasRead() {
-		if (node == null)
-			throw new NoJsonObjectReadException();
+	private boolean checkJsonWasNotRead() {
+		return node == null;
 	}
 
 	private void	saveJsonToFile(String jsonFilePath) throws IOException {
@@ -162,9 +162,8 @@ public class JSONHandler {
 	 * with default behavior.
 	 */
 	public Iterator<Node>	iterator() {
-		try {
-			checkJsonWasRead();
-		} catch (NoJsonObjectReadException exception) {
+		if (checkJsonWasNotRead()) {
+			NoJsonObjectReadException exception = new NoJsonObjectReadException();
 			logException(exception);
 			throw exception;
 		}
@@ -180,9 +179,8 @@ public class JSONHandler {
 	 * @return {@link Iterator<Node>} object.
 	 */
 	public Iterator<Node>	iterator(BinaryOperator<Node> operator) {
-		try {
-			checkJsonWasRead();
-		} catch (NoJsonObjectReadException exception) {
+		if (checkJsonWasNotRead()) {
+			NoJsonObjectReadException exception = new NoJsonObjectReadException();
 			logException(exception);
 			throw exception;
 		}
@@ -197,10 +195,12 @@ public class JSONHandler {
 	 * @param path - path to find node where new node will add.
 	 */
 	public void 	add(Node newNode, String path) {
-		Node	store;
-
-		store = getNode(path);
-		store.getChildren().add(newNode);
+		try {
+			addImpl(newNode, path);
+		} catch (Exception exception) {
+			logException(exception);
+			throw exception;
+		}
 	}
 
 	/**
@@ -212,20 +212,24 @@ public class JSONHandler {
 	 */
 	public void 	add(String name, Color color, int value, String path) {
 		try {
-			addImpl(name, color, value, path);
+			Node newNode = new Node(name, color, value);
+			logger.debug("New node {} created", newNode);
+
+			addImpl(newNode, path);
 		} catch (Exception exception) {
 			logException(exception);
 			throw exception;
 		}
 	}
 
-	private void	addImpl(String name, Color color, int value, String path) {
-		Node	newNode;
+	private void	addImpl(Node newNode, String path) {
 		Node	store;
 
-		newNode = new Node(name, color, value);
+		if (checkJsonWasNotRead())
+			throw new NoJsonObjectReadException();
 		store = getNodeImpl(path);
 		store.getChildren().add(newNode);
+		logger.info("New node {} added to node {}", newNode, store);
 	}
 
 	/**
@@ -246,7 +250,8 @@ public class JSONHandler {
 		StringBuilder	currentPath = new StringBuilder();
 		Node			startNode;
 
-		checkJsonWasRead();
+		if (checkJsonWasNotRead())
+			throw new NoJsonObjectReadException();
 		startNode = findSpecifiedPath(currentPath, path);
 		if (!currentPath.toString().equals(path))
 			throw new InvalidInternalJsonPathException(path);
