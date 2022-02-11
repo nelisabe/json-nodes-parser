@@ -76,61 +76,60 @@ Current scope:     <a href="../../index.html">all classes</a>
 <div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.sber.jnp.app;
 <i class="no-highlight">2</i>&nbsp;
 <i class="no-highlight">3</i>&nbsp;import com.sber.jnp.app.exceptions.InvalidNodeValueException;
-<i class="no-highlight">4</i>&nbsp;import com.sber.jnp.app.exceptions.InvalidValueInJsonException;
-<i class="no-highlight">5</i>&nbsp;
-<i class="no-highlight">6</i>&nbsp;import java.util.ArrayList;
-<i class="no-highlight">7</i>&nbsp;
-<i class="no-highlight">8</i>&nbsp;/**
-<i class="no-highlight">9</i>&nbsp; * Class represents one Node in json tree.
-<i class="no-highlight">10</i>&nbsp; */
-<i class="no-highlight">11</i>&nbsp;public class Node {
-<i class="no-highlight">12</i>&nbsp;	private final String  		name;
-<i class="no-highlight">13</i>&nbsp;	private final Color   		color;
-<i class="no-highlight">14</i>&nbsp;	private final int     		value;
-<i class="no-highlight">15</i>&nbsp;	private final ArrayList&lt;Node&gt; children;
-<i class="no-highlight">16</i>&nbsp;
-<b class="fc"><i class="no-highlight">17</i>&nbsp;	public Node(String name, Color color, int value) {</b>
-<b class="fc"><i class="no-highlight">18</i>&nbsp;		checkIntValueValid(value);</b>
-<b class="fc"><i class="no-highlight">19</i>&nbsp;		this.name = name;</b>
-<b class="fc"><i class="no-highlight">20</i>&nbsp;		this.color = color;</b>
-<b class="fc"><i class="no-highlight">21</i>&nbsp;		this.value = value;</b>
-<b class="fc"><i class="no-highlight">22</i>&nbsp;		this.children = new ArrayList&lt;&gt;();</b>
-<i class="no-highlight">23</i>&nbsp;	}
-<i class="no-highlight">24</i>&nbsp;
-<b class="fc"><i class="no-highlight">25</i>&nbsp;	public Node(String name, Color color, int value, ArrayList&lt;Node&gt; children) {</b>
-<b class="fc"><i class="no-highlight">26</i>&nbsp;		checkIntValueValid(value);</b>
-<b class="fc"><i class="no-highlight">27</i>&nbsp;		this.name = name;</b>
-<b class="fc"><i class="no-highlight">28</i>&nbsp;		this.color = color;</b>
-<b class="fc"><i class="no-highlight">29</i>&nbsp;		this.value = value;</b>
-<b class="fc"><i class="no-highlight">30</i>&nbsp;		this.children = children;</b>
-<i class="no-highlight">31</i>&nbsp;	}
-<i class="no-highlight">32</i>&nbsp;
-<i class="no-highlight">33</i>&nbsp;	private void	checkIntValueValid(int value) {
-<b class="fc"><i class="no-highlight">34</i>&nbsp;		if (value &lt; 0 || value &gt; 100)</b>
-<b class="fc"><i class="no-highlight">35</i>&nbsp;			throw new InvalidNodeValueException(&quot;Invalid int value.&quot;);</b>
-<i class="no-highlight">36</i>&nbsp;	}
-<i class="no-highlight">37</i>&nbsp;
-<i class="no-highlight">38</i>&nbsp;	public String	getName() {
-<b class="fc"><i class="no-highlight">39</i>&nbsp;		return name;</b>
-<i class="no-highlight">40</i>&nbsp;	}
-<i class="no-highlight">41</i>&nbsp;
-<i class="no-highlight">42</i>&nbsp;	public int 		getValue() {
-<b class="fc"><i class="no-highlight">43</i>&nbsp;		return value;</b>
-<i class="no-highlight">44</i>&nbsp;	}
-<i class="no-highlight">45</i>&nbsp;
-<i class="no-highlight">46</i>&nbsp;	public Color	getColor() {
-<b class="fc"><i class="no-highlight">47</i>&nbsp;		return color;</b>
-<i class="no-highlight">48</i>&nbsp;	}
-<i class="no-highlight">49</i>&nbsp;
-<i class="no-highlight">50</i>&nbsp;	public ArrayList&lt;Node&gt; getChildren() {
-<b class="fc"><i class="no-highlight">51</i>&nbsp;		return children;</b>
-<i class="no-highlight">52</i>&nbsp;	}
-<i class="no-highlight">53</i>&nbsp;
-<i class="no-highlight">54</i>&nbsp;	@Override
-<i class="no-highlight">55</i>&nbsp;	public String	toString() {
-<b class="fc"><i class="no-highlight">56</i>&nbsp;		return &quot;name: &quot; + name + &quot;, value: &quot; + value + &quot;, color: &quot; + color.toString();</b>
-<i class="no-highlight">57</i>&nbsp;	}
-<i class="no-highlight">58</i>&nbsp;}
+<i class="no-highlight">4</i>&nbsp;
+<i class="no-highlight">5</i>&nbsp;import java.util.ArrayList;
+<i class="no-highlight">6</i>&nbsp;
+<i class="no-highlight">7</i>&nbsp;/**
+<i class="no-highlight">8</i>&nbsp; * Class represents one Node in json tree.
+<i class="no-highlight">9</i>&nbsp; */
+<i class="no-highlight">10</i>&nbsp;public class Node {
+<i class="no-highlight">11</i>&nbsp;	private final String  		name;
+<i class="no-highlight">12</i>&nbsp;	private final Color   		color;
+<i class="no-highlight">13</i>&nbsp;	private final int     		value;
+<i class="no-highlight">14</i>&nbsp;	private final ArrayList&lt;Node&gt; children;
+<i class="no-highlight">15</i>&nbsp;
+<b class="fc"><i class="no-highlight">16</i>&nbsp;	public Node(String name, Color color, int value) {</b>
+<b class="fc"><i class="no-highlight">17</i>&nbsp;		checkIntValueValid(value);</b>
+<b class="fc"><i class="no-highlight">18</i>&nbsp;		this.name = name;</b>
+<b class="fc"><i class="no-highlight">19</i>&nbsp;		this.color = color;</b>
+<b class="fc"><i class="no-highlight">20</i>&nbsp;		this.value = value;</b>
+<b class="fc"><i class="no-highlight">21</i>&nbsp;		this.children = new ArrayList&lt;&gt;();</b>
+<i class="no-highlight">22</i>&nbsp;	}
+<i class="no-highlight">23</i>&nbsp;
+<b class="fc"><i class="no-highlight">24</i>&nbsp;	public Node(String name, Color color, int value, ArrayList&lt;Node&gt; children) {</b>
+<b class="fc"><i class="no-highlight">25</i>&nbsp;		checkIntValueValid(value);</b>
+<b class="fc"><i class="no-highlight">26</i>&nbsp;		this.name = name;</b>
+<b class="fc"><i class="no-highlight">27</i>&nbsp;		this.color = color;</b>
+<b class="fc"><i class="no-highlight">28</i>&nbsp;		this.value = value;</b>
+<b class="fc"><i class="no-highlight">29</i>&nbsp;		this.children = children;</b>
+<i class="no-highlight">30</i>&nbsp;	}
+<i class="no-highlight">31</i>&nbsp;
+<i class="no-highlight">32</i>&nbsp;	private void	checkIntValueValid(int value) {
+<b class="fc"><i class="no-highlight">33</i>&nbsp;		if (value &lt; 0 || value &gt; 100)</b>
+<b class="fc"><i class="no-highlight">34</i>&nbsp;			throw new InvalidNodeValueException(&quot;Invalid int value.&quot;);</b>
+<i class="no-highlight">35</i>&nbsp;	}
+<i class="no-highlight">36</i>&nbsp;
+<i class="no-highlight">37</i>&nbsp;	public String	getName() {
+<b class="fc"><i class="no-highlight">38</i>&nbsp;		return name;</b>
+<i class="no-highlight">39</i>&nbsp;	}
+<i class="no-highlight">40</i>&nbsp;
+<i class="no-highlight">41</i>&nbsp;	public int 		getValue() {
+<b class="fc"><i class="no-highlight">42</i>&nbsp;		return value;</b>
+<i class="no-highlight">43</i>&nbsp;	}
+<i class="no-highlight">44</i>&nbsp;
+<i class="no-highlight">45</i>&nbsp;	public Color	getColor() {
+<b class="fc"><i class="no-highlight">46</i>&nbsp;		return color;</b>
+<i class="no-highlight">47</i>&nbsp;	}
+<i class="no-highlight">48</i>&nbsp;
+<i class="no-highlight">49</i>&nbsp;	public ArrayList&lt;Node&gt; getChildren() {
+<b class="fc"><i class="no-highlight">50</i>&nbsp;		return children;</b>
+<i class="no-highlight">51</i>&nbsp;	}
+<i class="no-highlight">52</i>&nbsp;
+<i class="no-highlight">53</i>&nbsp;	@Override
+<i class="no-highlight">54</i>&nbsp;	public String	toString() {
+<b class="fc"><i class="no-highlight">55</i>&nbsp;		return &quot;name: &quot; + name + &quot;, value: &quot; + value + &quot;, color: &quot; + color.toString();</b>
+<i class="no-highlight">56</i>&nbsp;	}
+<i class="no-highlight">57</i>&nbsp;}
 </div>
 </pre>
 </div>
@@ -157,7 +156,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-02-11 15:24</div>
+    <div style="float:right;">generated on 2022-02-11 16:51</div>
 </div>
 </body>
 </html>
