@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Class represents one Node in json tree.
  */
-public class Node {
+public final class Node {
 	private final String  		name;
 	private final Color   		color;
 	private final int     		value;
