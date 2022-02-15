@@ -1,6 +1,5 @@
 package com.sber.jnp.app.tests;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
@@ -13,7 +12,7 @@ public class Utils {
 		return ((int)(Math.random() * 1000000)) + ".json";
 	}
 
-	public static String	createJsonFile(String content) throws IOException {
+	public static String	createJsonFile(String content) {
 		String fileName;
 
 		fileName = createRandomJsonName();
@@ -21,10 +20,38 @@ public class Utils {
 			Files.createFile(Paths.get(fileName));
 		} catch (FileAlreadyExistsException ignore) {
 			return createJsonFile(content);
+		} catch (Exception exception) {
+			throw new InternalTestErrorException(exception);
 		}
-		PrintWriter out = new PrintWriter(fileName);
+		writeFile(fileName, content);
+		return fileName;
+	}
+
+	public static void 		writeFile(String fileName, String content) {
+		PrintWriter out;
+
+		try {
+			out = new PrintWriter(fileName);
+		} catch (Exception exception) {
+			throw new InternalTestErrorException(exception);
+		}
 		out.println(content);
 		out.close();
-		return fileName;
+	}
+
+	public static byte[]	readFile(String fileName) {
+		try {
+			return Files.readAllBytes(Paths.get(fileName));
+		} catch (Exception exception) {
+			throw new InternalTestErrorException(exception);
+		}
+	}
+
+	public static void		deleteFile(String fileName) {
+		try {
+			Files.deleteIfExists(Paths.get(fileName));
+		} catch (Exception exception) {
+			throw new InternalTestErrorException(exception);
+		}
 	}
 }
