@@ -42,10 +42,6 @@ public class JSONHandlerImpl implements JSONHandler {
 		this.node = new Node(name, color, value);
 	}
 
-	/**
-	 * Tries to read input <b>jsonFilePath</b> file and convert in to {@link Node} object.
-	 * @param jsonFilePath - path to json file to handle.
-	 */
 	public void 	read(String jsonFilePath) {
 		try {
 			readImpl(jsonFilePath);
@@ -135,10 +131,6 @@ public class JSONHandlerImpl implements JSONHandler {
 				exception.getStackTrace());
 	}
 
-	/**
-	 * Tries to create <b>jsonFilePath</b> outfile and save converted {@link Node} object into it.
-	 * @param jsonFilePath - path to create json file.
-	 */
 	public void 	save(String jsonFilePath) {
 		try	{
 			saveImpl(jsonFilePath);
@@ -178,11 +170,6 @@ public class JSONHandlerImpl implements JSONHandler {
 		logger.debug("Json object wrote to {}", jsonFilePath);
 	}
 
-	/**
-	 * Creates an {@link Iterator<Node>} object, that  can iterate through json tree object.
-	 * @return {@link Iterator<Node>} object.
-	 * with default behavior.
-	 */
 	public Iterator<Node>	iterator() {
 		if (checkJsonWasNotRead()) {
 			NoJsonObjectReadException exception = new NoJsonObjectReadException();
@@ -195,12 +182,6 @@ public class JSONHandlerImpl implements JSONHandler {
 		return iterator;
 	}
 
-	/**
-	 * Creates an {@link Iterator<Node>} object, that  can iterate through json tree object
-	 * with custom behavior.
-	 * @param operator - {@link BinaryOperator<Node>} describes special rule to iterate through tree.
-	 * @return {@link Iterator<Node>} object.
-	 */
 	public Iterator<Node>	iterator(BinaryOperator<Node> operator) {
 		if (checkJsonWasNotRead()) {
 			NoJsonObjectReadException exception = new NoJsonObjectReadException();
@@ -213,11 +194,6 @@ public class JSONHandlerImpl implements JSONHandler {
 		return iterator;
 	}
 
-	/**
-	 * Adds new {@link Node} object to children of specified node.
-	 * @param newNode - new node.
-	 * @param path - path to find node where new node will add.
-	 */
 	public void 	add(Node newNode, String path) {
 		try {
 			addImpl(newNode, path);
@@ -227,13 +203,6 @@ public class JSONHandlerImpl implements JSONHandler {
 		}
 	}
 
-	/**
-	 * Adds new {@link Node} object to children of specified node.
-	 * @param name - name of new node.
-	 * @param color - color of new node.
-	 * @param value - value of new node.
-	 * @param path - path to find node where new node will add.
-	 */
 	public void 	add(String name, Color color, int value, String path) {
 		try {
 			Node newNode = new Node(name, color, value);
@@ -258,11 +227,6 @@ public class JSONHandlerImpl implements JSONHandler {
 		logger.info("New node {} added to node {}", newNode, store);
 	}
 
-	/**
-	 * Finds {@link Node} node in json tree that corresponds to specified path.
-	 * @param path - NodeName1/NodeName2/NodeName3/ form path to find node.
-	 * @return {@link Node} object.
-	 */
 	public Node		getNode(String path) {
 		try {
 			return getNodeImpl(path);
