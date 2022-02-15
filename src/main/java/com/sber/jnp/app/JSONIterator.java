@@ -14,7 +14,6 @@ class JSONIterator implements Iterator<Node> {
 
 	public JSONIterator(Node firstNode, BinaryOperator<Node> operator) {
 		this.operator = operator;
-
 		nodesQueue = new Stack<>();
 		passedNodes = new HashSet<>();
 		nodesQueue.push(firstNode);
@@ -27,15 +26,21 @@ class JSONIterator implements Iterator<Node> {
 	public Node		next() {
 		Node	current;
 
-		if (nodesQueue.empty())
+		if (nodesQueue.empty()) {
 			throw new NoSuchElementException();
+		}
+
 		current = nodesQueue.peek();
-		if (!passedNodes.contains(current))
+		if (!passedNodes.contains(current)) {
 			setCurrentNodePath();
-		if (wasAllChildrenPassed(current))
+		}
+
+		if (wasAllChildrenPassed(current)) {
 			nodesQueue.pop();
-		else
+		} else {
 			nodesQueue.push(selectChild(current));
+		}
+
 		if (!passedNodes.add(current)) {
 			current = next();
 			while (!nodesQueue.empty() && wasAllChildrenPassed(nodesQueue.peek()))
@@ -56,8 +61,9 @@ class JSONIterator implements Iterator<Node> {
 
 	private boolean wasAllChildrenPassed(Node node) {
 		for (Node child : node.getChildren()) {
-			if (!passedNodes.contains(child))
+			if (!passedNodes.contains(child)) {
 				return false;
+			}
 		}
 		return true;
 	}
@@ -67,8 +73,9 @@ class JSONIterator implements Iterator<Node> {
 
 		result = null;
 		for (Node child : parent.getChildren()) {
-			if (!passedNodes.contains(child))
+			if (!passedNodes.contains(child)) {
 				result = result == null ? child : operator.apply(result, child);
+			}
 		}
 		return result;
 	}
