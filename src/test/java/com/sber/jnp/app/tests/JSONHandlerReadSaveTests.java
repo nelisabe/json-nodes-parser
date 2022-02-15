@@ -70,7 +70,7 @@ public class JSONHandlerReadSaveTests {
 				  "color": "Red",
 				  "value": 1,
 				  "children": []
-				}""", new String(Utils.readFile(fileName)));
+				}""", Utils.readFile(fileName));
 		Utils.deleteFile(fileName);
 
 		jsonHandler.add("B", Color.Green, 10, "A/");
@@ -88,7 +88,7 @@ public class JSONHandlerReadSaveTests {
 				      "children": []
 				    }
 				  ]
-				}""", new String(Utils.readFile(fileName)));
+				}""", Utils.readFile(fileName));
 		Utils.deleteFile(fileName);
 
 		jsonHandler.create("C", Color.Blue, 30);
@@ -99,7 +99,7 @@ public class JSONHandlerReadSaveTests {
 				  "color": "Blue",
 				  "value": 30,
 				  "children": []
-				}""", new String(Utils.readFile(fileName)));
+				}""", Utils.readFile(fileName));
 		Utils.deleteFile(fileName);
 	}
 
@@ -128,7 +128,7 @@ public class JSONHandlerReadSaveTests {
 		jsonHandler.read(jsonFile);
 		jsonHandler.save(resultJson);
 		assertTrue(Files.exists(Paths.get(resultJson)));
-		assertEquals(jsonContent, new String(Utils.readFile(resultJson)));
+		assertEquals(jsonContent, Utils.readFile(resultJson));
 		assertThrows(IOErrorWritingJsonFileException.class, () ->
 				jsonHandler.save(resultJson));
 		Utils.deleteFile(resultJson);
@@ -219,8 +219,7 @@ public class JSONHandlerReadSaveTests {
 		jsonHandler.read(jsonFile);
 		jsonHandler.save(resultJson);
 		assertTrue(Files.exists(Paths.get(resultJson)));
-		assertEquals(jsonContentAfterHandle,
-				new String(Utils.readFile(resultJson)));
+		assertEquals(jsonContentAfterHandle, Utils.readFile(resultJson));
 		Utils.deleteFile(jsonFile);
 		Utils.deleteFile(resultJson);
 	}
@@ -342,9 +341,10 @@ public class JSONHandlerReadSaveTests {
 				      ]
 				    }
 				  ]
-				}""", new String(Utils.readFile(fileName)));
+				}""", Utils.readFile(fileName));
 		Utils.deleteFile(fileName);
 	}
+
 	@Test
 	public void	DeleteNodeWithoutChildren() {
 		JSONHandler jsonHandler = new JSONHandlerImpl();
@@ -437,7 +437,7 @@ public class JSONHandlerReadSaveTests {
 				      "children": []
 				    }
 				  ]
-				}""", new String(Utils.readFile(fileName)));
+				}""", Utils.readFile(fileName));
 		Utils.deleteFile(fileName);
 	}
 }

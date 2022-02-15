@@ -39,9 +39,9 @@ public class Utils {
 		out.close();
 	}
 
-	public static byte[]	readFile(String fileName) {
+	public static String	readFile(String fileName) {
 		try {
-			return Files.readAllBytes(Paths.get(fileName));
+			return new String(Files.readAllBytes(Paths.get(fileName)));
 		} catch (Exception exception) {
 			throw new InternalTestErrorException(exception);
 		}
