@@ -49,7 +49,7 @@ public class JSONHandlerReadSaveTests {
 		});
 		Utils.deleteFile(jsonFile);
 
-		final String jsonFile2 = Utils.createJsonFile("\n\n");
+		final String jsonFile2 = Utils.createJsonFile("\n \n\t");
 		assertThrows(WrongFileException.class, () -> {
 			JSONHandler jsonHandler = new JSONHandlerImpl();
 			jsonHandler.read(jsonFile2);
