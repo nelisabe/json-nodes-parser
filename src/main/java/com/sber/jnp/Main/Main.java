@@ -29,6 +29,7 @@ public class Main {
 		iterator = jsonHandler.iterator();
 		while (iterator.hasNext()) {
 			stringBuilder.append(iterator.next().getName());
+			stringBuilder.append(", ");
 		}
 		logger.info("Result of json {} read: {}", jsonFilePath, stringBuilder);
 		jsonHandler.save("test.json");
