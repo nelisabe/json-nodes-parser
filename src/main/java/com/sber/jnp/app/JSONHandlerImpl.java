@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
 public class JSONHandlerImpl implements JSONHandler {
 	private Node    					node;
 	private final Gson					gson;
-	private JSONIterator				iterator;
 	private final BinaryOperator<Node>	defaultOperator;
 
 	private static final Logger logger = LoggerFactory.getLogger(JSONHandlerImpl.class);
@@ -29,8 +28,8 @@ public class JSONHandlerImpl implements JSONHandler {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 
 		gsonBuilder.setPrettyPrinting();
-		gson = gsonBuilder.create();
-		defaultOperator = (x, y) -> x.getValue() < y.getValue() ? x : y;
+		this.gson = gsonBuilder.create();
+		this.defaultOperator = (x, y) -> x.getValue() < y.getValue() ? x : y;
 		logger.info("JSONHandler object created");
 	}
 
@@ -56,7 +55,7 @@ public class JSONHandlerImpl implements JSONHandler {
 		}
 
 		try {
-			node = gson.fromJson(jsonString, Node.class);
+			this.node = this.gson.fromJson(jsonString, Node.class);
 		} catch (Exception exception) {
 			throw new WrongFileException(exception);
 		}
@@ -89,10 +88,7 @@ public class JSONHandlerImpl implements JSONHandler {
 	}
 
 	private boolean isFileEmpty(String fileContent) {
-		String	noNewLinesContent;
-
-		noNewLinesContent = fileContent.replaceAll("\n", "");
-		return noNewLinesContent.equals("");
+		return fileContent.replaceAll("\n", "").equals("");
 	}
 
 	private void	checkFieldsValues() {
@@ -165,7 +161,7 @@ public class JSONHandlerImpl implements JSONHandler {
 			throw new FileAlreadyExistsException("file already exists: " + jsonFilePath);
 		}
 		PrintWriter out = new PrintWriter(jsonFilePath);
-		gson.toJson(node, out);
+		this.gson.toJson(this.node, out);
 		out.close();
 		logger.debug("Json object wrote to {}", jsonFilePath);
 	}
@@ -182,7 +178,7 @@ public class JSONHandlerImpl implements JSONHandler {
 			throw exception;
 		}
 
-		iterator = new JSONIterator(node, defaultOperator);
+		JSONIterator iterator = new JSONIterator(node, defaultOperator);
 		logger.info("Iterator created (default)");
 		return iterator;
 	}
@@ -200,7 +196,7 @@ public class JSONHandlerImpl implements JSONHandler {
 			throw exception;
 		}
 
-		iterator = new JSONIterator(node, operator);
+		JSONIterator iterator = new JSONIterator(node, operator);
 		logger.info("Iterator created (custom)");
 		return iterator;
 	}
@@ -290,8 +286,8 @@ public class JSONHandlerImpl implements JSONHandler {
 		Node			child;
 		int				length;
 
-		startNode = node;
-		appendPath(currentPath, node.getName());
+		startNode = this.node;
+		appendPath(currentPath, this.node.getName());
 		length = startNode.getChildren().size();
 		for (int i = 0; i < length && !currentPath.toString().equals(path); ++i) {
 			child = startNode.getChildren().get(i);
