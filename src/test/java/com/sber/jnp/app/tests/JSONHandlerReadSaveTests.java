@@ -3,7 +3,6 @@ package com.sber.jnp.app.tests;
 import com.sber.jnp.app.*;
 import com.sber.jnp.app.exceptions.*;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
