@@ -89,7 +89,8 @@ public class JSONHandlerImpl implements JSONHandler {
 	}
 
 	private boolean isFileEmpty(String fileContent) {
-		return fileContent.replaceAll("[ \t]", "")
+		return fileContent
+				.replaceAll("[ \t]", "")
 				.replaceAll(System.lineSeparator(), "")
 				.equals("");
 	}
