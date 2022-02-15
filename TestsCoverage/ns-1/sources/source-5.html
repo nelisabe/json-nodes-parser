@@ -1,0 +1,95 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > JSONHandler</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.sber.jnp.app</a>
+</div>
+
+<h1>Coverage Summary for Class: JSONHandler (com.sber.jnp.app)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">JSONHandler</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.sber.jnp.app;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import java.util.Iterator;
+<i class="no-highlight">4</i>&nbsp;import java.util.function.BinaryOperator;
+<i class="no-highlight">5</i>&nbsp;
+<i class="no-highlight">6</i>&nbsp;public interface JSONHandler {
+<i class="no-highlight">7</i>&nbsp;	/**
+<i class="no-highlight">8</i>&nbsp;	 * Initializes new representation of json tree. Previous nodes will be deleted.
+<i class="no-highlight">9</i>&nbsp;	 * @param firstNode - {@link Node} object that will be first in new tree.
+<i class="no-highlight">10</i>&nbsp;	 */
+<i class="no-highlight">11</i>&nbsp;	void	create(Node firstNode);
+<i class="no-highlight">12</i>&nbsp;
+<i class="no-highlight">13</i>&nbsp;	/**
+<i class="no-highlight">14</i>&nbsp;	 * Initializes new representation of json tree. Previous nodes will be deleted.
+<i class="no-highlight">15</i>&nbsp;	 * &lt;b&gt;name&lt;/b&gt;, &lt;b&gt;color&lt;/b&gt; and &lt;b&gt;value&lt;/b&gt; are parameters of first {@link Node}
+<i class="no-highlight">16</i>&nbsp;	 * in new tree;
+<i class="no-highlight">17</i>&nbsp;	 */
+<i class="no-highlight">18</i>&nbsp;	void	create(String name, Color color, int value);
+<i class="no-highlight">19</i>&nbsp;	void	read(String jsonFilePath);
+<i class="no-highlight">20</i>&nbsp;	void	save(String jsonFilePath);
+<i class="no-highlight">21</i>&nbsp;	void 	add(Node newNode, String path);
+<i class="no-highlight">22</i>&nbsp;	void 	add(String name, Color color, int value, String path);
+<i class="no-highlight">23</i>&nbsp;	Node	getNode(String path);
+<i class="no-highlight">24</i>&nbsp;	Iterator&lt;Node&gt;	iterator();
+<i class="no-highlight">25</i>&nbsp;	Iterator&lt;Node&gt;	iterator(BinaryOperator&lt;Node&gt; operator);
+<i class="no-highlight">26</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-02-15 15:59</div>
+</div>
+</body>
+</html>

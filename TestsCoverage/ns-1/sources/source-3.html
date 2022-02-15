@@ -82,76 +82,83 @@ Current scope:     <a href="../../index.html">all classes</a>
 <i class="no-highlight">7</i>&nbsp;import java.util.function.BinaryOperator;
 <i class="no-highlight">8</i>&nbsp;
 <i class="no-highlight">9</i>&nbsp;class JSONIterator implements Iterator&lt;Node&gt; {
-<i class="no-highlight">10</i>&nbsp;	private final Stack&lt;Node&gt; 			nodesQueue;
-<i class="no-highlight">11</i>&nbsp;	private final HashSet&lt;Node&gt; 		passedNodes;
-<i class="no-highlight">12</i>&nbsp;	private final BinaryOperator&lt;Node&gt; 	operator;
-<i class="no-highlight">13</i>&nbsp;	private String						currentNodePath;
+<i class="no-highlight">10</i>&nbsp;	private final Stack&lt;Node&gt; nodesQueue;
+<i class="no-highlight">11</i>&nbsp;	private final HashSet&lt;Node&gt; passedNodes;
+<i class="no-highlight">12</i>&nbsp;	private final BinaryOperator&lt;Node&gt; operator;
+<i class="no-highlight">13</i>&nbsp;	private String currentNodePath;
 <i class="no-highlight">14</i>&nbsp;
 <b class="fc"><i class="no-highlight">15</i>&nbsp;	public JSONIterator(Node firstNode, BinaryOperator&lt;Node&gt; operator) {</b>
 <b class="fc"><i class="no-highlight">16</i>&nbsp;		this.operator = operator;</b>
-<i class="no-highlight">17</i>&nbsp;
-<b class="fc"><i class="no-highlight">18</i>&nbsp;		nodesQueue = new Stack&lt;&gt;();</b>
-<b class="fc"><i class="no-highlight">19</i>&nbsp;		passedNodes = new HashSet&lt;&gt;();</b>
-<b class="fc"><i class="no-highlight">20</i>&nbsp;		nodesQueue.push(firstNode);</b>
-<i class="no-highlight">21</i>&nbsp;	}
-<i class="no-highlight">22</i>&nbsp;
-<i class="no-highlight">23</i>&nbsp;	public boolean	hasNext() {
-<b class="fc"><i class="no-highlight">24</i>&nbsp;		return !nodesQueue.empty();</b>
-<i class="no-highlight">25</i>&nbsp;	}
-<i class="no-highlight">26</i>&nbsp;
-<i class="no-highlight">27</i>&nbsp;	public Node		next() {
-<i class="no-highlight">28</i>&nbsp;		Node	current;
-<i class="no-highlight">29</i>&nbsp;
-<b class="fc"><i class="no-highlight">30</i>&nbsp;		if (nodesQueue.empty())</b>
-<b class="fc"><i class="no-highlight">31</i>&nbsp;			throw new NoSuchElementException();</b>
-<b class="fc"><i class="no-highlight">32</i>&nbsp;		current = nodesQueue.peek();</b>
-<b class="fc"><i class="no-highlight">33</i>&nbsp;		if (!passedNodes.contains(current))</b>
-<b class="fc"><i class="no-highlight">34</i>&nbsp;			setCurrentNodePath();</b>
-<b class="fc"><i class="no-highlight">35</i>&nbsp;		if (wasAllChildrenPassed(current))</b>
-<b class="fc"><i class="no-highlight">36</i>&nbsp;			nodesQueue.pop();</b>
-<i class="no-highlight">37</i>&nbsp;		else
-<b class="fc"><i class="no-highlight">38</i>&nbsp;			nodesQueue.push(selectChild(current));</b>
-<b class="fc"><i class="no-highlight">39</i>&nbsp;		if (!passedNodes.add(current)) {</b>
-<b class="fc"><i class="no-highlight">40</i>&nbsp;			current = next();</b>
-<b class="fc"><i class="no-highlight">41</i>&nbsp;			while (!nodesQueue.empty() &amp;&amp; wasAllChildrenPassed(nodesQueue.peek()))</b>
-<b class="fc"><i class="no-highlight">42</i>&nbsp;				nodesQueue.pop();</b>
-<i class="no-highlight">43</i>&nbsp;		}
-<b class="fc"><i class="no-highlight">44</i>&nbsp;		return current;</b>
-<i class="no-highlight">45</i>&nbsp;	}
-<i class="no-highlight">46</i>&nbsp;
-<i class="no-highlight">47</i>&nbsp;	private void	setCurrentNodePath() {
-<b class="fc"><i class="no-highlight">48</i>&nbsp;		StringBuilder	stringBuilder = new StringBuilder();</b>
-<i class="no-highlight">49</i>&nbsp;
-<b class="fc"><i class="no-highlight">50</i>&nbsp;		nodesQueue.forEach(node -&gt; {</b>
-<b class="fc"><i class="no-highlight">51</i>&nbsp;			stringBuilder.append(node.getName());</b>
-<b class="fc"><i class="no-highlight">52</i>&nbsp;			stringBuilder.append(&quot;/&quot;);</b>
-<i class="no-highlight">53</i>&nbsp;		});
-<b class="fc"><i class="no-highlight">54</i>&nbsp;		currentNodePath = stringBuilder.toString();</b>
-<i class="no-highlight">55</i>&nbsp;	}
-<i class="no-highlight">56</i>&nbsp;
-<i class="no-highlight">57</i>&nbsp;	private boolean wasAllChildrenPassed(Node node) {
-<b class="fc"><i class="no-highlight">58</i>&nbsp;		for (Node child : node.getChildren()) {</b>
-<b class="fc"><i class="no-highlight">59</i>&nbsp;			if (!passedNodes.contains(child))</b>
-<b class="fc"><i class="no-highlight">60</i>&nbsp;				return false;</b>
-<b class="fc"><i class="no-highlight">61</i>&nbsp;		}</b>
-<b class="fc"><i class="no-highlight">62</i>&nbsp;		return true;</b>
-<i class="no-highlight">63</i>&nbsp;	}
-<i class="no-highlight">64</i>&nbsp;
-<i class="no-highlight">65</i>&nbsp;	private Node	selectChild(Node parent) {
-<i class="no-highlight">66</i>&nbsp;		Node	result;
-<i class="no-highlight">67</i>&nbsp;
-<b class="fc"><i class="no-highlight">68</i>&nbsp;		result = null;</b>
-<b class="fc"><i class="no-highlight">69</i>&nbsp;		for (Node child : parent.getChildren()) {</b>
-<b class="fc"><i class="no-highlight">70</i>&nbsp;			if (!passedNodes.contains(child))</b>
-<b class="fc"><i class="no-highlight">71</i>&nbsp;				result = result == null ? child : operator.apply(result, child);</b>
-<b class="fc"><i class="no-highlight">72</i>&nbsp;		}</b>
-<b class="fc"><i class="no-highlight">73</i>&nbsp;		return result;</b>
-<i class="no-highlight">74</i>&nbsp;	}
-<i class="no-highlight">75</i>&nbsp;
-<i class="no-highlight">76</i>&nbsp;	public String	getCurrentNodePath() {
-<b class="fc"><i class="no-highlight">77</i>&nbsp;		return currentNodePath;</b>
-<i class="no-highlight">78</i>&nbsp;	}
-<i class="no-highlight">79</i>&nbsp;}
+<b class="fc"><i class="no-highlight">17</i>&nbsp;		nodesQueue = new Stack&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">18</i>&nbsp;		passedNodes = new HashSet&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">19</i>&nbsp;		nodesQueue.push(firstNode);</b>
+<i class="no-highlight">20</i>&nbsp;	}
+<i class="no-highlight">21</i>&nbsp;
+<i class="no-highlight">22</i>&nbsp;	public boolean	hasNext() {
+<b class="fc"><i class="no-highlight">23</i>&nbsp;		return !nodesQueue.empty();</b>
+<i class="no-highlight">24</i>&nbsp;	}
+<i class="no-highlight">25</i>&nbsp;
+<i class="no-highlight">26</i>&nbsp;	public Node		next() {
+<i class="no-highlight">27</i>&nbsp;		Node current;
+<i class="no-highlight">28</i>&nbsp;
+<b class="fc"><i class="no-highlight">29</i>&nbsp;		if (nodesQueue.empty()) {</b>
+<b class="fc"><i class="no-highlight">30</i>&nbsp;			throw new NoSuchElementException();</b>
+<i class="no-highlight">31</i>&nbsp;		}
+<i class="no-highlight">32</i>&nbsp;
+<b class="fc"><i class="no-highlight">33</i>&nbsp;		current = nodesQueue.peek();</b>
+<b class="fc"><i class="no-highlight">34</i>&nbsp;		if (!passedNodes.contains(current)) {</b>
+<b class="fc"><i class="no-highlight">35</i>&nbsp;			setCurrentNodePath();</b>
+<i class="no-highlight">36</i>&nbsp;		}
+<i class="no-highlight">37</i>&nbsp;
+<b class="fc"><i class="no-highlight">38</i>&nbsp;		if (wasAllChildrenPassed(current)) {</b>
+<b class="fc"><i class="no-highlight">39</i>&nbsp;			nodesQueue.pop();</b>
+<i class="no-highlight">40</i>&nbsp;		} else {
+<b class="fc"><i class="no-highlight">41</i>&nbsp;			nodesQueue.push(selectChild(current));</b>
+<i class="no-highlight">42</i>&nbsp;		}
+<i class="no-highlight">43</i>&nbsp;
+<b class="fc"><i class="no-highlight">44</i>&nbsp;		if (!passedNodes.add(current)) {</b>
+<b class="fc"><i class="no-highlight">45</i>&nbsp;			current = next();</b>
+<b class="fc"><i class="no-highlight">46</i>&nbsp;			while (!nodesQueue.empty() &amp;&amp; wasAllChildrenPassed(nodesQueue.peek()))</b>
+<b class="fc"><i class="no-highlight">47</i>&nbsp;				nodesQueue.pop();</b>
+<i class="no-highlight">48</i>&nbsp;		}
+<b class="fc"><i class="no-highlight">49</i>&nbsp;		return current;</b>
+<i class="no-highlight">50</i>&nbsp;	}
+<i class="no-highlight">51</i>&nbsp;
+<i class="no-highlight">52</i>&nbsp;	private void	setCurrentNodePath() {
+<b class="fc"><i class="no-highlight">53</i>&nbsp;		StringBuilder stringBuilder = new StringBuilder();</b>
+<i class="no-highlight">54</i>&nbsp;
+<b class="fc"><i class="no-highlight">55</i>&nbsp;		nodesQueue.forEach(node -&gt; {</b>
+<b class="fc"><i class="no-highlight">56</i>&nbsp;			stringBuilder.append(node.getName());</b>
+<b class="fc"><i class="no-highlight">57</i>&nbsp;			stringBuilder.append(&quot;/&quot;);</b>
+<i class="no-highlight">58</i>&nbsp;		});
+<b class="fc"><i class="no-highlight">59</i>&nbsp;		currentNodePath = stringBuilder.toString();</b>
+<i class="no-highlight">60</i>&nbsp;	}
+<i class="no-highlight">61</i>&nbsp;
+<i class="no-highlight">62</i>&nbsp;	private boolean wasAllChildrenPassed(Node node) {
+<b class="fc"><i class="no-highlight">63</i>&nbsp;		for (Node child : node.getChildren()) {</b>
+<b class="fc"><i class="no-highlight">64</i>&nbsp;			if (!passedNodes.contains(child)) {</b>
+<b class="fc"><i class="no-highlight">65</i>&nbsp;				return false;</b>
+<i class="no-highlight">66</i>&nbsp;			}
+<b class="fc"><i class="no-highlight">67</i>&nbsp;		}</b>
+<b class="fc"><i class="no-highlight">68</i>&nbsp;		return true;</b>
+<i class="no-highlight">69</i>&nbsp;	}
+<i class="no-highlight">70</i>&nbsp;
+<i class="no-highlight">71</i>&nbsp;	private Node	selectChild(Node parent) {
+<i class="no-highlight">72</i>&nbsp;		Node result;
+<i class="no-highlight">73</i>&nbsp;
+<b class="fc"><i class="no-highlight">74</i>&nbsp;		result = null;</b>
+<b class="fc"><i class="no-highlight">75</i>&nbsp;		for (Node child : parent.getChildren()) {</b>
+<b class="fc"><i class="no-highlight">76</i>&nbsp;			if (!passedNodes.contains(child)) {</b>
+<b class="fc"><i class="no-highlight">77</i>&nbsp;				result = result == null ? child : operator.apply(result, child);</b>
+<i class="no-highlight">78</i>&nbsp;			}
+<b class="fc"><i class="no-highlight">79</i>&nbsp;		}</b>
+<b class="fc"><i class="no-highlight">80</i>&nbsp;		return result;</b>
+<i class="no-highlight">81</i>&nbsp;	}
+<i class="no-highlight">82</i>&nbsp;
+<i class="no-highlight">83</i>&nbsp;	public String	getCurrentNodePath() {
+<b class="fc"><i class="no-highlight">84</i>&nbsp;		return currentNodePath;</b>
+<i class="no-highlight">85</i>&nbsp;	}
+<i class="no-highlight">86</i>&nbsp;}
 </div>
 </pre>
 </div>
@@ -178,7 +185,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-02-11 16:51</div>
+    <div style="float:right;">generated on 2022-02-15 15:59</div>
 </div>
 </body>
 </html>
