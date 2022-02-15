@@ -8,6 +8,7 @@ import java.io.*;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.function.BinaryOperator;
@@ -170,30 +171,6 @@ public class JSONHandlerImpl implements JSONHandler {
 		logger.debug("Json object wrote to {}", jsonFilePath);
 	}
 
-	public Iterator<Node>	iterator() {
-		if (checkJsonWasNotRead()) {
-			NoJsonObjectReadException exception = new NoJsonObjectReadException();
-			logException(exception);
-			throw exception;
-		}
-
-		JSONIterator iterator = new JSONIterator(node, defaultOperator);
-		logger.info("Iterator created (default)");
-		return iterator;
-	}
-
-	public Iterator<Node>	iterator(BinaryOperator<Node> operator) {
-		if (checkJsonWasNotRead()) {
-			NoJsonObjectReadException exception = new NoJsonObjectReadException();
-			logException(exception);
-			throw exception;
-		}
-
-		JSONIterator iterator = new JSONIterator(node, operator);
-		logger.info("Iterator created (custom)");
-		return iterator;
-	}
-
 	public void 	add(Node newNode, String path) {
 		try {
 			addImpl(newNode, path);
@@ -225,6 +202,51 @@ public class JSONHandlerImpl implements JSONHandler {
 		store = getNodeImpl(path);
 		store.getChildren().add(newNode);
 		logger.info("New node {} added to node {}", newNode, store);
+	}
+
+	public void		deleteWithChildren(String pathToNode) {
+		try {
+			deleteWithChildrenImpl(pathToNode);
+		} catch (Exception exception) {
+			logException(exception);
+			throw exception;
+		}
+	}
+
+	private void	deleteWithChildrenImpl(String path) {
+		Node toDelete;
+		Node previous;
+
+		if (checkJsonWasNotRead()) {
+			throw new NoJsonObjectReadException();
+		}
+
+		toDelete = getNodeImpl(path);
+		previous = getNodeImpl(path.substring(0, path.length() - 2));
+		previous.getChildren().remove(toDelete);
+	}
+
+	public void 	deleteWithoutChildren(String pathToNode) {
+		try {
+			deleteWithoutChildrenImpl(pathToNode);
+		} catch (Exception exception) {
+			logException(exception);
+			throw exception;
+		}
+	}
+
+	private void	deleteWithoutChildrenImpl(String path) {
+		Node toDelete;
+		Node previous;
+
+		if (checkJsonWasNotRead()) {
+			throw new NoJsonObjectReadException();
+		}
+
+		toDelete = getNodeImpl(path);
+		previous = getNodeImpl(path.substring(0, path.length() - 2));
+		previous.getChildren().addAll(toDelete.getChildren());
+		previous.getChildren().remove(toDelete);
 	}
 
 	public Node		getNode(String path) {
@@ -280,5 +302,29 @@ public class JSONHandlerImpl implements JSONHandler {
 	private void	appendPath(StringBuilder currentPath, String append) {
 		currentPath.append(append);
 		currentPath.append("/");
+	}
+
+	public Iterator<Node>	iterator() {
+		if (checkJsonWasNotRead()) {
+			NoJsonObjectReadException exception = new NoJsonObjectReadException();
+			logException(exception);
+			throw exception;
+		}
+
+		JSONIterator iterator = new JSONIterator(node, defaultOperator);
+		logger.info("Iterator created (default)");
+		return iterator;
+	}
+
+	public Iterator<Node>	iterator(BinaryOperator<Node> operator) {
+		if (checkJsonWasNotRead()) {
+			NoJsonObjectReadException exception = new NoJsonObjectReadException();
+			logException(exception);
+			throw exception;
+		}
+
+		JSONIterator iterator = new JSONIterator(node, operator);
+		logger.info("Iterator created (custom)");
+		return iterator;
 	}
 }
