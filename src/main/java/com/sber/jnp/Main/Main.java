@@ -12,13 +12,10 @@ public class Main {
 	private static final Logger logger = LoggerFactory.getLogger(JSONHandlerImpl.class);
 
 	private static String	parseArguments(String[] args) {
-		Arguments	arguments;
-		String		jsonFilePath;
+		Arguments	arguments = new Arguments();
 
-		arguments = new Arguments();
 		arguments.parse(args);
-		jsonFilePath = arguments.getJsonFilePath();
-		return jsonFilePath;
+		return arguments.getJsonFilePath();
 	}
 
 	public static void	main(String[] args) {
