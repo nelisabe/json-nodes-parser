@@ -287,4 +287,157 @@ public class JSONHandlerReadSaveTests {
 		assertThrows(InvalidInternalJsonPathException.class, () ->
 				jsonHandler.add(node, "A/H/R/C/"));
 	}
+
+	@Test
+	public void	DeleteNodeWithChildren() {
+		JSONHandler jsonHandler = new JSONHandlerImpl();
+		String fileName = Utils.createRandomJsonName();
+
+		assertThrows(NoJsonObjectReadException.class, () ->
+				jsonHandler.deleteWithChildren("A/H/"));
+
+		jsonHandler.read("BigTree.json");
+		assertThrows(InvalidInternalJsonPathException.class, () ->
+				jsonHandler.deleteWithChildren("A/P/"));
+
+		jsonHandler.deleteWithChildren("A/H/");
+		jsonHandler.deleteWithChildren("A/B/C/F");
+		jsonHandler.save(fileName);
+		assertEquals("""
+				{
+				  "name": "A",
+				  "color": "Blue",
+				  "value": 22,
+				  "children": [
+				    {
+				      "name": "B",
+				      "color": "Red",
+				      "value": 22,
+				      "children": [
+				        {
+				          "name": "C",
+				          "color": "Green",
+				          "value": 10,
+				          "children": [
+				            {
+				              "name": "D",
+				              "color": "Green",
+				              "value": 67,
+				              "children": []
+				            },
+				            {
+				              "name": "E",
+				              "color": "Green",
+				              "value": 33,
+				              "children": []
+				            },
+				            {
+				              "name": "G",
+				              "color": "Green",
+				              "value": 50,
+				              "children": []
+				            }
+				          ]
+				        }
+				      ]
+				    }
+				  ]
+				}""", new String(Utils.readFile(fileName)));
+		Utils.deleteFile(fileName);
+	}
+	@Test
+	public void	DeleteNodeWithoutChildren() {
+		JSONHandler jsonHandler = new JSONHandlerImpl();
+		String fileName = Utils.createRandomJsonName();
+
+		assertThrows(NoJsonObjectReadException.class, () ->
+				jsonHandler.deleteWithoutChildren("A/H/"));
+
+		jsonHandler.read("BigTree.json");
+		assertThrows(InvalidInternalJsonPathException.class, () ->
+				jsonHandler.deleteWithoutChildren("A/P/"));
+
+		jsonHandler.deleteWithoutChildren("A/H/");
+		jsonHandler.deleteWithoutChildren("A/B/C/F");
+		jsonHandler.save(fileName);
+		assertEquals("""
+				{
+				  "name": "A",
+				  "color": "Blue",
+				  "value": 22,
+				  "children": [
+				    {
+				      "name": "B",
+				      "color": "Red",
+				      "value": 22,
+				      "children": [
+				        {
+				          "name": "C",
+				          "color": "Green",
+				          "value": 10,
+				          "children": [
+				            {
+				              "name": "D",
+				              "color": "Green",
+				              "value": 67,
+				              "children": []
+				            },
+				            {
+				              "name": "E",
+				              "color": "Green",
+				              "value": 33,
+				              "children": []
+				            },
+				            {
+				              "name": "G",
+				              "color": "Green",
+				              "value": 50,
+				              "children": []
+				            }
+				          ]
+				        }
+				      ]
+				    },
+				    {
+				      "name": "X",
+				      "color": "Green",
+				      "value": 10,
+				      "children": [
+				        {
+				          "name": "W",
+				          "color": "Green",
+				          "value": 99,
+				          "children": [
+				            {
+				              "name": "O",
+				              "color": "Green",
+				              "value": 99,
+				              "children": []
+				            },
+				            {
+				              "name": "M",
+				              "color": "Green",
+				              "value": 86,
+				              "children": []
+				            }
+				          ]
+				        }
+				      ]
+				    },
+				    {
+				      "name": "Z",
+				      "color": "Green",
+				      "value": 45,
+				      "children": []
+				    },
+				    {
+				      "name": "Y",
+				      "color": "Green",
+				      "value": 1,
+				      "children": []
+				    }
+				  ]
+				}""", new String(Utils.readFile(fileName)));
+		Utils.deleteFile(fileName);
+	}
 }
