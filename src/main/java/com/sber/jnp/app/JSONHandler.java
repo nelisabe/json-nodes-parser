@@ -49,6 +49,10 @@ public interface JSONHandler {
 	 */
 	void 	add(String name, Color color, int value, String path);
 
+	void deleteWithChildren(String pathToNode);
+
+	void deleteWithoutChildren(String pathToNode);
+
 	/**
 	 * Finds {@link Node} node in json tree that corresponds to specified path.
 	 * @param path - NodeName1/NodeName2/NodeName3/ form path to find node.
