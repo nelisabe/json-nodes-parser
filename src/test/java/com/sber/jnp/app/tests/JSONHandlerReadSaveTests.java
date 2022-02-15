@@ -25,7 +25,7 @@ public class JSONHandlerReadSaveTests {
 	}
 
 	@Test
-	public void	WrongFileContent() throws IOException {
+	public void	WrongFileContent() {
 		final String jsonFile = Utils.createJsonFile(
 				"""
 						{
@@ -38,24 +38,24 @@ public class JSONHandlerReadSaveTests {
 			JSONHandler jsonHandler = new JSONHandlerImpl();
 			jsonHandler.read(jsonFile);
 		});
-		Files.deleteIfExists(Paths.get(jsonFile));
+		Utils.deleteFile(jsonFile);
 	}
 
 	@Test
-	public void	EmptyFile() throws IOException {
+	public void	EmptyFile() {
 		final String jsonFile = Utils.createJsonFile("");
 		assertThrows(WrongFileException.class, () -> {
 			JSONHandler jsonHandler = new JSONHandlerImpl();
 			jsonHandler.read(jsonFile);
 		});
-		Files.deleteIfExists(Paths.get(jsonFile));
+		Utils.deleteFile(jsonFile);
 
 		final String jsonFile2 = Utils.createJsonFile("\n\n");
 		assertThrows(WrongFileException.class, () -> {
 			JSONHandler jsonHandler = new JSONHandlerImpl();
 			jsonHandler.read(jsonFile2);
 		});
-		Files.deleteIfExists(Paths.get(jsonFile2));
+		Utils.deleteFile(jsonFile2);
 	}
 
 	@Test
@@ -67,7 +67,7 @@ public class JSONHandlerReadSaveTests {
 	}
 
 	@Test
-	public void	ReadAndSaveObjectAsJson() throws IOException {
+	public void	ReadAndSaveObjectAsJson() {
 		JSONHandler	jsonHandler = new JSONHandlerImpl();
 		String jsonContent =
 				"""
@@ -83,11 +83,11 @@ public class JSONHandlerReadSaveTests {
 		jsonHandler.read(jsonFile);
 		jsonHandler.save(resultJson);
 		assertTrue(Files.exists(Paths.get(resultJson)));
-		assertEquals(jsonContent, new String(Files.readAllBytes(Paths.get(resultJson))));
+		assertEquals(jsonContent, new String(Utils.readFile(resultJson)));
 		assertThrows(IOErrorWritingJsonFileException.class, () ->
 				jsonHandler.save(resultJson));
-		Files.deleteIfExists(Paths.get(resultJson));
-		Files.deleteIfExists(Paths.get(jsonFile));
+		Utils.deleteFile(resultJson);
+		Utils.deleteFile(jsonFile);
 	}
 
 	@Test
@@ -149,7 +149,7 @@ public class JSONHandlerReadSaveTests {
 	}
 
 	@Test
-	public void	ExcessFields() throws IOException {
+	public void	ExcessFields() {
 		String jsonContent = """
 				{
 				  "name": "Some Name",
@@ -175,9 +175,9 @@ public class JSONHandlerReadSaveTests {
 		jsonHandler.save(resultJson);
 		assertTrue(Files.exists(Paths.get(resultJson)));
 		assertEquals(jsonContentAfterHandle,
-				new String(Files.readAllBytes(Paths.get(resultJson))));
-		Files.deleteIfExists(Paths.get(jsonFile));
-		Files.deleteIfExists(Paths.get(resultJson));
+				new String(Utils.readFile(resultJson)));
+		Utils.deleteFile(jsonFile);
+		Utils.deleteFile(resultJson);
 	}
 
 	@Test

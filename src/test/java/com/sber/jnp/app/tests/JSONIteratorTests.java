@@ -5,9 +5,6 @@ import com.sber.jnp.app.JSONHandlerImpl;
 import com.sber.jnp.app.Node;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -16,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class JSONIteratorTests {
 	@Test
-	public void	IteratorSmallTree() throws IOException {
+	public void	IteratorSmallTree() {
 		StringBuilder stringBuilder = new StringBuilder();
 		JSONHandler jsonHandler = new JSONHandlerImpl();
 		Iterator<Node> iterator;
@@ -34,11 +31,11 @@ public class JSONIteratorTests {
 			stringBuilder.append(iterator.next().getName());
 		}
 		assertEquals("A", stringBuilder.toString());
-		Files.deleteIfExists(Paths.get(jsonFile));
+		Utils.deleteFile(jsonFile);
 	}
 
 	@Test
-	public void	IteratorSimpleTree() throws IOException {
+	public void	IteratorSimpleTree() {
 		StringBuilder stringBuilder = new StringBuilder();
 		JSONHandler jsonHandler = new JSONHandlerImpl();
 		Iterator<Node> iterator;
@@ -76,11 +73,11 @@ public class JSONIteratorTests {
 			stringBuilder.append(iterator.next().getName());
 		}
 		assertEquals("ABEC", stringBuilder.toString());
-		Files.deleteIfExists(Paths.get(jsonFile));
+		Utils.deleteFile(jsonFile);
 	}
 
 	@Test
-	public void	IteratorDoubleTree() throws IOException {
+	public void	IteratorDoubleTree() {
 		StringBuilder stringBuilder = new StringBuilder();
 		JSONHandler jsonHandler = new JSONHandlerImpl();
 		Iterator<Node> iterator;
@@ -132,7 +129,7 @@ public class JSONIteratorTests {
 			stringBuilder.append(iterator.next().getName());
 		}
 		assertEquals("AFOZIR", stringBuilder.toString());
-		Files.deleteIfExists(Paths.get(jsonFile));
+		Utils.deleteFile(jsonFile);
 	}
 
 	@Test
@@ -199,7 +196,7 @@ public class JSONIteratorTests {
 	}
 
 	@Test
-	public void	EndOfTree() throws IOException {
+	public void	EndOfTree() {
 		JSONHandler	jsonHandler = new JSONHandlerImpl();
 		Iterator<Node> iterator;
 		String jsonFile = Utils.createJsonFile("""
@@ -214,11 +211,11 @@ public class JSONIteratorTests {
 		iterator = jsonHandler.iterator();
 		iterator.next();
 		assertThrows(NoSuchElementException.class, iterator::next);
-		Files.deleteIfExists(Paths.get(jsonFile));
+		Utils.deleteFile(jsonFile);
 	}
 
 	@Test
-	public void	SameNodes() throws IOException {
+	public void	SameNodes() {
 		JSONHandler jsonHandler = new JSONHandlerImpl();
 		Iterator<Node> iterator;
 		StringBuilder stringBuilder = new StringBuilder();
@@ -257,6 +254,6 @@ public class JSONIteratorTests {
 			stringBuilder.append(iterator.next().getName());
 		}
 		assertEquals("AAAA", stringBuilder.toString());
-		Files.deleteIfExists(Paths.get(jsonFile));
+		Utils.deleteFile(jsonFile);
 	}
 }
