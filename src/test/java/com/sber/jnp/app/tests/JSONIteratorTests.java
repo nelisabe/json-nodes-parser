@@ -1,6 +1,7 @@
 package com.sber.jnp.app.tests;
 
 import com.sber.jnp.app.JSONHandler;
+import com.sber.jnp.app.JSONHandlerImpl;
 import com.sber.jnp.app.Node;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,7 @@ public class JSONIteratorTests {
 	@Test
 	public void	IteratorSmallTree() throws IOException {
 		StringBuilder	stringBuilder = new StringBuilder();
-		JSONHandler jsonHandler = new JSONHandler();
+		JSONHandler jsonHandler = new JSONHandlerImpl();
 		Iterator<Node> iterator;
 		String			jsonFile = Utils.createJsonFile("""
 				{
@@ -39,7 +40,7 @@ public class JSONIteratorTests {
 	@Test
 	public void	IteratorSimpleTree() throws IOException {
 		StringBuilder	stringBuilder = new StringBuilder();
-		JSONHandler		jsonHandler = new JSONHandler();
+		JSONHandler		jsonHandler = new JSONHandlerImpl();
 		Iterator<Node>	iterator;
 		String			jsonFile = Utils.createJsonFile("""
 				{
@@ -81,7 +82,7 @@ public class JSONIteratorTests {
 	@Test
 	public void	IteratorDoubleTree() throws IOException {
 		StringBuilder	stringBuilder = new StringBuilder();
-		JSONHandler		jsonHandler = new JSONHandler();
+		JSONHandler		jsonHandler = new JSONHandlerImpl();
 		Iterator<Node>	iterator;
 		String			jsonFile = Utils.createJsonFile("""
 				{
@@ -137,7 +138,7 @@ public class JSONIteratorTests {
 	@Test
 	public void	IteratorBigTree() {
 		StringBuilder	stringBuilder = new StringBuilder();
-		JSONHandler		jsonHandler = new JSONHandler();
+		JSONHandler		jsonHandler = new JSONHandlerImpl();
 		Iterator<Node>	iterator;
 
 		jsonHandler.read("BigTree.json");
@@ -151,7 +152,7 @@ public class JSONIteratorTests {
 	@Test
 	public void	IteratorBigTreeDifferentOperator() {
 		StringBuilder	stringBuilder = new StringBuilder();
-		JSONHandler		jsonHandler = new JSONHandler();
+		JSONHandler		jsonHandler = new JSONHandlerImpl();
 		Iterator<Node>	iterator;
 
 		jsonHandler.read("BigTree.json");
@@ -169,7 +170,7 @@ public class JSONIteratorTests {
 	@Test
 	public void	IteratorComplexTree() {
 		StringBuilder	stringBuilder = new StringBuilder();
-		JSONHandler		jsonHandler = new JSONHandler();
+		JSONHandler		jsonHandler = new JSONHandlerImpl();
 		Iterator<Node>	iterator;
 
 		jsonHandler.read("ComplexTree.json");
@@ -184,7 +185,7 @@ public class JSONIteratorTests {
 	@Test
 	public void	IteratorComplexTreeDifferentOperator() {
 		StringBuilder	stringBuilder = new StringBuilder();
-		JSONHandler		jsonHandler = new JSONHandler();
+		JSONHandler		jsonHandler = new JSONHandlerImpl();
 		Iterator<Node>	iterator;
 
 		jsonHandler.read("ComplexTree.json");
@@ -199,8 +200,8 @@ public class JSONIteratorTests {
 
 	@Test
 	public void	EndOfTree() throws IOException {
-		JSONHandler jsonHandler = new JSONHandler();
-		Iterator<Node> iterator;
+		JSONHandler		jsonHandler = new JSONHandlerImpl();
+		Iterator<Node>	iterator;
 		String			jsonFile = Utils.createJsonFile("""
 				{
 				  "name": "A",
@@ -213,6 +214,49 @@ public class JSONIteratorTests {
 		iterator = jsonHandler.iterator();
 		iterator.next();
 		assertThrows(NoSuchElementException.class, iterator::next);
+		Files.deleteIfExists(Paths.get(jsonFile));
+	}
+
+	@Test
+	public void	SameNodes() throws IOException {
+		JSONHandler		jsonHandler = new JSONHandlerImpl();
+		Iterator<Node>	iterator;
+		StringBuilder	stringBuilder = new StringBuilder();
+		String			jsonFile = Utils.createJsonFile("""
+				{
+				  "name": "A",
+				  "color": "Blue",
+				  "value": 12,
+				  "children": [
+				    {
+				      "name": "A",
+				      "color": "Blue",
+				      "value": 12,
+				      "children": [
+				        {
+				          "name": "A",
+				          "color": "Blue",
+				          "value": 12,
+				          "children": []
+				        }
+				      ]
+				    },
+				    {
+				      "name": "A",
+				      "color": "Blue",
+				      "value": 12,
+				      "children": []
+				    }
+				  ]
+				}
+				""");
+
+		jsonHandler.read(jsonFile);
+		iterator = jsonHandler.iterator();
+		while (iterator.hasNext()) {
+			stringBuilder.append(iterator.next().getName());
+		}
+		assertEquals("AAAA", stringBuilder.toString());
 		Files.deleteIfExists(Paths.get(jsonFile));
 	}
 }
