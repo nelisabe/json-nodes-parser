@@ -58,6 +58,52 @@ public class JSONHandlerReadSaveTests {
 	}
 
 	@Test
+	public void	Create() {
+		JSONHandler jsonHandler = new JSONHandlerImpl();
+		String fileName = Utils.createRandomJsonName();
+
+		jsonHandler.create(new Node("A", Color.Red, 1));
+		jsonHandler.save(fileName);
+		assertEquals("""
+				{
+				  "name": "A",
+				  "color": "Red",
+				  "value": 1,
+				  "children": []
+				}""", new String(Utils.readFile(fileName)));
+		Utils.deleteFile(fileName);
+
+		jsonHandler.add("B", Color.Green, 10, "A/");
+		jsonHandler.save(fileName);
+		assertEquals("""
+				{
+				  "name": "A",
+				  "color": "Red",
+				  "value": 1,
+				  "children": [
+				    {
+				      "name": "B",
+				      "color": "Green",
+				      "value": 10,
+				      "children": []
+				    }
+				  ]
+				}""", new String(Utils.readFile(fileName)));
+		Utils.deleteFile(fileName);
+
+		jsonHandler.create("C", Color.Blue, 30);
+		jsonHandler.save(fileName);
+		assertEquals("""
+				{
+				  "name": "C",
+				  "color": "Blue",
+				  "value": 30,
+				  "children": []
+				}""", new String(Utils.readFile(fileName)));
+		Utils.deleteFile(fileName);
+	}
+
+	@Test
 	public void	SaveBeforeRead() {
 		assertThrows(NoJsonObjectReadException.class, () -> {
 			JSONHandler jsonHandler = new JSONHandlerImpl();
