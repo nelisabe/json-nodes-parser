@@ -34,6 +34,14 @@ public class JSONHandlerImpl implements JSONHandler {
 		logger.info("JSONHandler object created");
 	}
 
+	public void 	create(Node firstNode) {
+		this.node = firstNode;
+	}
+
+	public void 	create(String name, Color color, int value) {
+		this.node = new Node(name, color, value);
+	}
+
 	/**
 	 * Tries to read input <b>jsonFilePath</b> file and convert in to {@link Node} object.
 	 * @param jsonFilePath - path to json file to handle.
