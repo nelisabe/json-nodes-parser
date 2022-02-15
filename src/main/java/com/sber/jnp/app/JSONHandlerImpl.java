@@ -8,6 +8,7 @@ import java.io.*;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.function.BinaryOperator;
 import org.slf4j.Logger;
@@ -105,8 +106,8 @@ public class JSONHandlerImpl implements JSONHandler {
 			}
 
 			if (current.getColor() == null) {
-				logger.error("Invalid value in node: {}. Allowed colors: Red, Green, Blue.",
-						it.getCurrentNodePath());
+				logger.error("Invalid value in node: {}. Allowed colors: {}.",
+						it.getCurrentNodePath(), Arrays.toString(Color.values()));
 				error = true;
 			}
 		}
