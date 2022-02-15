@@ -49,8 +49,17 @@ public interface JSONHandler {
 	 */
 	void 	add(String name, Color color, int value, String path);
 
+	/**
+	 * Removes specified {@link Node} node from tree with all its children.
+	 * @param pathToNode - path to node that will be deleted.
+	 */
 	void deleteWithChildren(String pathToNode);
 
+	/**
+	 * Removes specified {@link Node} node from tree, replacing all its children to
+	 * higher parent.
+	 * @param pathToNode - path to node that will be deleted.
+	 */
 	void deleteWithoutChildren(String pathToNode);
 
 	/**
