@@ -15,11 +15,11 @@ public class JSONHandlerReadSaveTests {
 	@Test
 	public void WrongFile() {
 		assertThrows(IOErrorReadingJsonException.class, () -> {
-			JSONHandler jsonHandler = new JSONHandler();
+			JSONHandler jsonHandler = new JSONHandlerImpl();
 			jsonHandler.read(Utils.createRandomJsonName());
 		});
 		assertThrows(WrongFileException.class, () -> {
-			JSONHandler jsonHandler = new JSONHandler();
+			JSONHandler jsonHandler = new JSONHandlerImpl();
 			jsonHandler.read("json.wr");
 		});
 	}
@@ -35,7 +35,7 @@ public class JSONHandlerReadSaveTests {
 						  "children": []
 						}""");
 		assertThrows(WrongFileException.class, () -> {
-			JSONHandler jsonHandler = new JSONHandler();
+			JSONHandler jsonHandler = new JSONHandlerImpl();
 			jsonHandler.read(jsonFile);
 		});
 		Files.deleteIfExists(Paths.get(jsonFile));
@@ -45,14 +45,14 @@ public class JSONHandlerReadSaveTests {
 	public void	EmptyFile() throws IOException {
 		final String jsonFile = Utils.createJsonFile("");
 		assertThrows(WrongFileException.class, () -> {
-			JSONHandler jsonHandler = new JSONHandler();
+			JSONHandler jsonHandler = new JSONHandlerImpl();
 			jsonHandler.read(jsonFile);
 		});
 		Files.deleteIfExists(Paths.get(jsonFile));
 
 		final String jsonFile2 = Utils.createJsonFile("\n\n");
 		assertThrows(WrongFileException.class, () -> {
-			JSONHandler jsonHandler = new JSONHandler();
+			JSONHandler jsonHandler = new JSONHandlerImpl();
 			jsonHandler.read(jsonFile2);
 		});
 		Files.deleteIfExists(Paths.get(jsonFile2));
@@ -61,14 +61,14 @@ public class JSONHandlerReadSaveTests {
 	@Test
 	public void	SaveBeforeRead() {
 		assertThrows(NoJsonObjectReadException.class, () -> {
-			JSONHandler jsonHandler = new JSONHandler();
+			JSONHandler jsonHandler = new JSONHandlerImpl();
 			jsonHandler.save("some.json");
 		});
 	}
 
 	@Test
 	public void	ReadAndSaveObjectAsJson() throws IOException {
-		JSONHandler	jsonHandler = new JSONHandler();
+		JSONHandler	jsonHandler = new JSONHandlerImpl();
 		String		jsonContent =
 				"""
 						{
@@ -92,7 +92,7 @@ public class JSONHandlerReadSaveTests {
 
 	@Test
 	public void	GetNodeByPath() {
-		JSONHandler		jsonHandler = new JSONHandler();
+		JSONHandler		jsonHandler = new JSONHandlerImpl();
 		Node			node;
 
 		jsonHandler.read("ComplexTree.json");
@@ -112,7 +112,7 @@ public class JSONHandlerReadSaveTests {
 
 	@Test
 	public void	WrongNodePath() {
-		JSONHandler		jsonHandler = new JSONHandler();
+		JSONHandler		jsonHandler = new JSONHandlerImpl();
 
 		jsonHandler.read("ComplexTree.json");
 		assertThrows(InvalidInternalJsonPathException.class, () ->
@@ -130,11 +130,11 @@ public class JSONHandlerReadSaveTests {
 	@Test
 	public void	GetIteratorBeforeRead() {
 		assertThrows(NoJsonObjectReadException.class, () -> {
-			JSONHandler jsonHandler = new JSONHandler();
+			JSONHandler jsonHandler = new JSONHandlerImpl();
 			jsonHandler.iterator();
 		});
 		assertThrows(NoJsonObjectReadException.class, () -> {
-			JSONHandler jsonHandler = new JSONHandler();
+			JSONHandler jsonHandler = new JSONHandlerImpl();
 			jsonHandler.iterator((x, y) ->
 					x.getValue() < y.getValue() ? x : y);
 		});
@@ -143,7 +143,7 @@ public class JSONHandlerReadSaveTests {
 	@Test
 	public void	GetNodeBeforeRead() {
 		assertThrows(NoJsonObjectReadException.class, () -> {
-			JSONHandler jsonHandler = new JSONHandler();
+			JSONHandler jsonHandler = new JSONHandlerImpl();
 			jsonHandler.getNode("A/");
 		});
 	}
@@ -169,7 +169,7 @@ public class JSONHandlerReadSaveTests {
 				}""";
 		String		jsonFile = Utils.createJsonFile(jsonContent);
 		String		resultJson = Utils.createRandomJsonName();
-		JSONHandler	jsonHandler = new JSONHandler();
+		JSONHandler	jsonHandler = new JSONHandlerImpl();
 
 		jsonHandler.read(jsonFile);
 		jsonHandler.save(resultJson);
@@ -183,7 +183,7 @@ public class JSONHandlerReadSaveTests {
 	@Test
 	public void	InvalidValuesInJson() {
 		assertThrows(InvalidValueInJsonException.class, () -> {
-			JSONHandler jsonHandler = new JSONHandler();
+			JSONHandler jsonHandler = new JSONHandlerImpl();
 			jsonHandler.read("ComplexTreeErrors.json");
 		});
 	}
@@ -215,7 +215,7 @@ public class JSONHandlerReadSaveTests {
 
 	@Test
 	public void	AddNewNode() {
-		JSONHandler jsonHandler = new JSONHandler();
+		JSONHandler jsonHandler = new JSONHandlerImpl();
 		Node node;
 
 		jsonHandler.read("BigTree.json");
@@ -229,7 +229,7 @@ public class JSONHandlerReadSaveTests {
 
 	@Test
 	public void	AddNewNodeExceptions() {
-		JSONHandler jsonHandler = new JSONHandler();
+		JSONHandler jsonHandler = new JSONHandlerImpl();
 		Node node = new Node("V", Color.Blue, 43);
 
 		assertThrows(NoJsonObjectReadException.class, () ->
