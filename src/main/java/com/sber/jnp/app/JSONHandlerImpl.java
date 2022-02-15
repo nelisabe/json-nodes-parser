@@ -220,6 +220,10 @@ public class JSONHandlerImpl implements JSONHandler {
 			throw new NoJsonObjectReadException();
 		}
 
+		if (path.length() <= 2) {
+			throw new InvalidInternalJsonPathException(path + ". Cant delete first node.");
+		}
+
 		toDelete = getNodeImpl(path);
 		previous = getNodeImpl(path.substring(0, path.length() - 2));
 		previous.getChildren().remove(toDelete);
@@ -240,6 +244,10 @@ public class JSONHandlerImpl implements JSONHandler {
 
 		if (checkJsonWasNotRead()) {
 			throw new NoJsonObjectReadException();
+		}
+
+		if (path.length() <= 2) {
+			throw new InvalidInternalJsonPathException(path + ". Cant delete first node.");
 		}
 
 		toDelete = getNodeImpl(path);

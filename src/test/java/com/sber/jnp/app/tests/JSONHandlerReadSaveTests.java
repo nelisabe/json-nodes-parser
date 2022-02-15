@@ -440,4 +440,15 @@ public class JSONHandlerReadSaveTests {
 				}""", Utils.readFile(fileName));
 		Utils.deleteFile(fileName);
 	}
+
+	@Test
+	public void	DeleteFirstNode() {
+		JSONHandler jsonHandler = new JSONHandlerImpl();
+
+		jsonHandler.read("BigTree.json");
+		assertThrows(InvalidInternalJsonPathException.class, () ->
+			jsonHandler.deleteWithChildren("A/"));
+		assertThrows(InvalidInternalJsonPathException.class, () ->
+				jsonHandler.deleteWithoutChildren("A/"));
+	}
 }
