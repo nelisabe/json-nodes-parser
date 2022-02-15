@@ -7,10 +7,10 @@ import java.util.Stack;
 import java.util.function.BinaryOperator;
 
 class JSONIterator implements Iterator<Node> {
-	private final Stack<Node> 			nodesQueue;
-	private final HashSet<Node> 		passedNodes;
-	private final BinaryOperator<Node> 	operator;
-	private String						currentNodePath;
+	private final Stack<Node> nodesQueue;
+	private final HashSet<Node> passedNodes;
+	private final BinaryOperator<Node> operator;
+	private String currentNodePath;
 
 	public JSONIterator(Node firstNode, BinaryOperator<Node> operator) {
 		this.operator = operator;
@@ -24,7 +24,7 @@ class JSONIterator implements Iterator<Node> {
 	}
 
 	public Node		next() {
-		Node	current;
+		Node current;
 
 		if (nodesQueue.empty()) {
 			throw new NoSuchElementException();
@@ -50,7 +50,7 @@ class JSONIterator implements Iterator<Node> {
 	}
 
 	private void	setCurrentNodePath() {
-		StringBuilder	stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder();
 
 		nodesQueue.forEach(node -> {
 			stringBuilder.append(node.getName());
@@ -69,7 +69,7 @@ class JSONIterator implements Iterator<Node> {
 	}
 
 	private Node	selectChild(Node parent) {
-		Node	result;
+		Node result;
 
 		result = null;
 		for (Node child : parent.getChildren()) {

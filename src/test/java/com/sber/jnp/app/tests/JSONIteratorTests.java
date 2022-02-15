@@ -17,10 +17,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class JSONIteratorTests {
 	@Test
 	public void	IteratorSmallTree() throws IOException {
-		StringBuilder	stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder();
 		JSONHandler jsonHandler = new JSONHandlerImpl();
 		Iterator<Node> iterator;
-		String			jsonFile = Utils.createJsonFile("""
+		String jsonFile = Utils.createJsonFile("""
 				{
 				  "name": "A",
 				  "color": "Blue",
@@ -39,10 +39,10 @@ public class JSONIteratorTests {
 
 	@Test
 	public void	IteratorSimpleTree() throws IOException {
-		StringBuilder	stringBuilder = new StringBuilder();
-		JSONHandler		jsonHandler = new JSONHandlerImpl();
-		Iterator<Node>	iterator;
-		String			jsonFile = Utils.createJsonFile("""
+		StringBuilder stringBuilder = new StringBuilder();
+		JSONHandler jsonHandler = new JSONHandlerImpl();
+		Iterator<Node> iterator;
+		String jsonFile = Utils.createJsonFile("""
 				{
 				  "name": "A",
 				  "color": "Blue",
@@ -81,10 +81,10 @@ public class JSONIteratorTests {
 
 	@Test
 	public void	IteratorDoubleTree() throws IOException {
-		StringBuilder	stringBuilder = new StringBuilder();
-		JSONHandler		jsonHandler = new JSONHandlerImpl();
-		Iterator<Node>	iterator;
-		String			jsonFile = Utils.createJsonFile("""
+		StringBuilder stringBuilder = new StringBuilder();
+		JSONHandler jsonHandler = new JSONHandlerImpl();
+		Iterator<Node> iterator;
+		String jsonFile = Utils.createJsonFile("""
 				{
 				  "name": "A",
 				  "color": "Blue",
@@ -137,9 +137,9 @@ public class JSONIteratorTests {
 
 	@Test
 	public void	IteratorBigTree() {
-		StringBuilder	stringBuilder = new StringBuilder();
-		JSONHandler		jsonHandler = new JSONHandlerImpl();
-		Iterator<Node>	iterator;
+		StringBuilder stringBuilder = new StringBuilder();
+		JSONHandler	jsonHandler = new JSONHandlerImpl();
+		Iterator<Node> iterator;
 
 		jsonHandler.read("BigTree.json");
 		iterator = jsonHandler.iterator();
@@ -151,9 +151,9 @@ public class JSONIteratorTests {
 
 	@Test
 	public void	IteratorBigTreeDifferentOperator() {
-		StringBuilder	stringBuilder = new StringBuilder();
-		JSONHandler		jsonHandler = new JSONHandlerImpl();
-		Iterator<Node>	iterator;
+		StringBuilder stringBuilder = new StringBuilder();
+		JSONHandler jsonHandler = new JSONHandlerImpl();
+		Iterator<Node> iterator;
 
 		jsonHandler.read("BigTree.json");
 		iterator = jsonHandler.iterator((x, y) -> {
@@ -169,9 +169,9 @@ public class JSONIteratorTests {
 
 	@Test
 	public void	IteratorComplexTree() {
-		StringBuilder	stringBuilder = new StringBuilder();
-		JSONHandler		jsonHandler = new JSONHandlerImpl();
-		Iterator<Node>	iterator;
+		StringBuilder stringBuilder = new StringBuilder();
+		JSONHandler jsonHandler = new JSONHandlerImpl();
+		Iterator<Node> iterator;
 
 		jsonHandler.read("ComplexTree.json");
 		iterator = jsonHandler.iterator();
@@ -184,9 +184,9 @@ public class JSONIteratorTests {
 
 	@Test
 	public void	IteratorComplexTreeDifferentOperator() {
-		StringBuilder	stringBuilder = new StringBuilder();
-		JSONHandler		jsonHandler = new JSONHandlerImpl();
-		Iterator<Node>	iterator;
+		StringBuilder stringBuilder = new StringBuilder();
+		JSONHandler jsonHandler = new JSONHandlerImpl();
+		Iterator<Node> iterator;
 
 		jsonHandler.read("ComplexTree.json");
 		iterator = jsonHandler.iterator((x, y) ->
@@ -200,9 +200,9 @@ public class JSONIteratorTests {
 
 	@Test
 	public void	EndOfTree() throws IOException {
-		JSONHandler		jsonHandler = new JSONHandlerImpl();
-		Iterator<Node>	iterator;
-		String			jsonFile = Utils.createJsonFile("""
+		JSONHandler	jsonHandler = new JSONHandlerImpl();
+		Iterator<Node> iterator;
+		String jsonFile = Utils.createJsonFile("""
 				{
 				  "name": "A",
 				  "color": "Blue",
@@ -219,10 +219,10 @@ public class JSONIteratorTests {
 
 	@Test
 	public void	SameNodes() throws IOException {
-		JSONHandler		jsonHandler = new JSONHandlerImpl();
-		Iterator<Node>	iterator;
-		StringBuilder	stringBuilder = new StringBuilder();
-		String			jsonFile = Utils.createJsonFile("""
+		JSONHandler jsonHandler = new JSONHandlerImpl();
+		Iterator<Node> iterator;
+		StringBuilder stringBuilder = new StringBuilder();
+		String jsonFile = Utils.createJsonFile("""
 				{
 				  "name": "A",
 				  "color": "Blue",

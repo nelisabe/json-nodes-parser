@@ -14,7 +14,7 @@ public class Utils {
 	}
 
 	public static String	createJsonFile(String content) throws IOException {
-		String	fileName;
+		String fileName;
 
 		fileName = createRandomJsonName();
 		try {

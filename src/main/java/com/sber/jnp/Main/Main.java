@@ -12,17 +12,17 @@ public class Main {
 	private static final Logger logger = LoggerFactory.getLogger(JSONHandlerImpl.class);
 
 	private static String	parseArguments(String[] args) {
-		Arguments	arguments = new Arguments();
+		Arguments arguments = new Arguments();
 
 		arguments.parse(args);
 		return arguments.getJsonFilePath();
 	}
 
 	public static void	main(String[] args) {
-		String	jsonFilePath;
+		String jsonFilePath;
 		JSONHandler jsonHandler = new JSONHandlerImpl();
 		Iterator<Node> iterator;
-		StringBuilder	stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder();
 
 		jsonFilePath = parseArguments(args);
 		jsonHandler.read(jsonFilePath);

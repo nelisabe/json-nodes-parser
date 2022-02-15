@@ -8,9 +8,9 @@ import java.util.ArrayList;
  * Class represents one Node in json tree.
  */
 public final class Node {
-	private final String  		name;
-	private final Color   		color;
-	private final int     		value;
+	private final String name;
+	private final Color color;
+	private final int value;
 	private final ArrayList<Node> children;
 
 	public Node(String name, Color color, int value) {

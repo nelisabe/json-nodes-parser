@@ -69,7 +69,7 @@ public class JSONHandlerReadSaveTests {
 	@Test
 	public void	ReadAndSaveObjectAsJson() throws IOException {
 		JSONHandler	jsonHandler = new JSONHandlerImpl();
-		String		jsonContent =
+		String jsonContent =
 				"""
 						{
 						  "name": "Name 1-1-2",
@@ -77,8 +77,8 @@ public class JSONHandlerReadSaveTests {
 						  "value": 33,
 						  "children": []
 						}""";
-		String		jsonFile = Utils.createJsonFile(jsonContent);
-		String		resultJson = Utils.createRandomJsonName();
+		String jsonFile = Utils.createJsonFile(jsonContent);
+		String resultJson = Utils.createRandomJsonName();
 
 		jsonHandler.read(jsonFile);
 		jsonHandler.save(resultJson);
@@ -92,8 +92,8 @@ public class JSONHandlerReadSaveTests {
 
 	@Test
 	public void	GetNodeByPath() {
-		JSONHandler		jsonHandler = new JSONHandlerImpl();
-		Node			node;
+		JSONHandler jsonHandler = new JSONHandlerImpl();
+		Node node;
 
 		jsonHandler.read("ComplexTree.json");
 		node = jsonHandler.getNode("A/F/O/");
@@ -112,7 +112,7 @@ public class JSONHandlerReadSaveTests {
 
 	@Test
 	public void	WrongNodePath() {
-		JSONHandler		jsonHandler = new JSONHandlerImpl();
+		JSONHandler jsonHandler = new JSONHandlerImpl();
 
 		jsonHandler.read("ComplexTree.json");
 		assertThrows(InvalidInternalJsonPathException.class, () ->
@@ -150,7 +150,7 @@ public class JSONHandlerReadSaveTests {
 
 	@Test
 	public void	ExcessFields() throws IOException {
-		String		jsonContent = """
+		String jsonContent = """
 				{
 				  "name": "Some Name",
 				  "wrong": "should not be there",
@@ -160,15 +160,15 @@ public class JSONHandlerReadSaveTests {
 				  "children": [],
 				  "excess_2": []
 				}""";
-		String		jsonContentAfterHandle = """
+		String jsonContentAfterHandle = """
 				{
 				  "name": "Some Name",
 				  "color": "Blue",
 				  "value": 22,
 				  "children": []
 				}""";
-		String		jsonFile = Utils.createJsonFile(jsonContent);
-		String		resultJson = Utils.createRandomJsonName();
+		String jsonFile = Utils.createJsonFile(jsonContent);
+		String resultJson = Utils.createRandomJsonName();
 		JSONHandler	jsonHandler = new JSONHandlerImpl();
 
 		jsonHandler.read(jsonFile);

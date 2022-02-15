@@ -19,9 +19,9 @@ import org.slf4j.LoggerFactory;
  * @version 0.1
  */
 public class JSONHandlerImpl implements JSONHandler {
-	private Node    					node;
-	private final Gson					gson;
-	private final BinaryOperator<Node>	defaultOperator;
+	private Node node;
+	private final Gson gson;
+	private final BinaryOperator<Node> defaultOperator;
 
 	private static final Logger logger = LoggerFactory.getLogger(JSONHandlerImpl.class);
 
@@ -48,7 +48,7 @@ public class JSONHandlerImpl implements JSONHandler {
 	}
 
 	private void  	readImpl(String jsonFilePath) {
-		String  jsonString;
+		String jsonString;
 
 		jsonString = readJsonFile(jsonFilePath);
 		if (isFileEmpty(jsonString)) {
@@ -66,7 +66,7 @@ public class JSONHandlerImpl implements JSONHandler {
 	}
 
 	private String	readJsonFile(String jsonFilePath) {
-		String	json;
+		String json;
 
 		checkFileExtension(jsonFilePath);
 		try {
@@ -79,7 +79,7 @@ public class JSONHandlerImpl implements JSONHandler {
 	}
 
 	private void	checkFileExtension(String jsonFilePath) {
-		String 	message = "invalid file extension";
+		String message = "invalid file extension";
 
 		if (!jsonFilePath.endsWith(".json")) {
 			throw new WrongFileException(message);
@@ -93,9 +93,9 @@ public class JSONHandlerImpl implements JSONHandler {
 	}
 
 	private void	checkFieldsValues() {
-		JSONIterator 	it = new JSONIterator(node, defaultOperator);
-		Node			current;
-		boolean			error = false;
+		JSONIterator it = new JSONIterator(node, defaultOperator);
+		Node current;
+		boolean error = false;
 
 		while (it.hasNext()) {
 			current = it.next();
@@ -236,7 +236,7 @@ public class JSONHandlerImpl implements JSONHandler {
 	}
 
 	private void	addImpl(Node newNode, String path) {
-		Node	store;
+		Node store;
 
 		if (checkJsonWasNotRead()) {
 			throw new NoJsonObjectReadException();
@@ -262,8 +262,8 @@ public class JSONHandlerImpl implements JSONHandler {
 	}
 
 	private Node 	getNodeImpl(String path) {
-		StringBuilder	currentPath = new StringBuilder();
-		Node			startNode;
+		StringBuilder currentPath = new StringBuilder();
+		Node startNode;
 
 		if (checkJsonWasNotRead()) {
 			throw new NoJsonObjectReadException();
@@ -283,9 +283,9 @@ public class JSONHandlerImpl implements JSONHandler {
 	}
 
 	private Node	findSpecifiedPath(StringBuilder currentPath, String path) {
-		Node 			startNode;
-		Node			child;
-		int				length;
+		Node startNode;
+		Node child;
+		int	 length;
 
 		startNode = this.node;
 		appendPath(currentPath, this.node.getName());
