@@ -454,9 +454,9 @@ public class JSONHandlerReadSaveTests {
 
 		jsonHandler.read(Utils.getResourceFilePath(
 				"BigTree.json", this));
-		assertThrows(InvalidInternalJsonPathException.class, () ->
+		assertThrows(FirstNodeDeleteException.class, () ->
 			jsonHandler.deleteWithChildren("A/"));
-		assertThrows(InvalidInternalJsonPathException.class, () ->
+		assertThrows(FirstNodeDeleteException.class, () ->
 				jsonHandler.deleteWithoutChildren("A/"));
 	}
 }

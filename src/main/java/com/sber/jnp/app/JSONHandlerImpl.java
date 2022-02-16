@@ -205,40 +205,23 @@ public class JSONHandlerImpl implements JSONHandler {
 
 	public void		deleteWithChildren(String pathToNode) {
 		try {
-			deleteWithChildrenImpl(pathToNode);
+			deleteImpl(pathToNode, true);
 		} catch (Exception exception) {
 			logException(exception);
 			throw exception;
 		}
-	}
-
-	private void	deleteWithChildrenImpl(String path) {
-		Node toDelete;
-		Node previous;
-
-		if (checkJsonWasNotRead()) {
-			throw new NoJsonObjectReadException();
-		}
-
-		if (path.length() <= 2) {
-			throw new InvalidInternalJsonPathException(path + ". Cant delete first node.");
-		}
-
-		toDelete = getNodeImpl(path);
-		previous = getNodeImpl(path.substring(0, path.length() - 2));
-		previous.getChildren().remove(toDelete);
 	}
 
 	public void 	deleteWithoutChildren(String pathToNode) {
 		try {
-			deleteWithoutChildrenImpl(pathToNode);
+			deleteImpl(pathToNode, false);
 		} catch (Exception exception) {
 			logException(exception);
 			throw exception;
 		}
 	}
 
-	private void	deleteWithoutChildrenImpl(String path) {
+	private void	deleteImpl(String path, boolean deleteChildren) {
 		Node toDelete;
 		Node previous;
 
@@ -246,14 +229,24 @@ public class JSONHandlerImpl implements JSONHandler {
 			throw new NoJsonObjectReadException();
 		}
 
-		if (path.length() <= 2) {
-			throw new InvalidInternalJsonPathException(path + ". Cant delete first node.");
+		if (path.equals(this.node.getName()) ||
+				path.equals(this.node.getName() + '/')) {
+			throw new FirstNodeDeleteException(this.node.getName());
 		}
 
 		toDelete = getNodeImpl(path);
-		previous = getNodeImpl(path.substring(0, path.length() - 2));
-		previous.getChildren().addAll(toDelete.getChildren());
+		previous = getPenultimateNode(path);
 		previous.getChildren().remove(toDelete);
+		if (!deleteChildren)
+			previous.getChildren().addAll(toDelete.getChildren());
+	}
+
+	private Node	getPenultimateNode(String path) {
+		if (path.endsWith("/")) {
+			path = path.substring(0, path.length() - 1);
+		}
+
+		return getNodeImpl(path.substring(0, path.lastIndexOf('/')));
 	}
 
 	public Node		getNode(String path) {
