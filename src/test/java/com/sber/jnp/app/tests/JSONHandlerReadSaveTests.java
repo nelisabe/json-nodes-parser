@@ -6,6 +6,7 @@ import com.sber.jnp.app.exceptions.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -458,5 +459,37 @@ public class JSONHandlerReadSaveTests {
 			jsonHandler.deleteWithChildren("A/"));
 		assertThrows(FirstNodeDeleteException.class, () ->
 				jsonHandler.deleteWithoutChildren("A/"));
+	}
+
+	@Test
+	public void	ComprehensiveTest() {
+		JSONHandler jsonHandler = new JSONHandlerImpl();
+		StringBuilder stringBuilder = new StringBuilder();
+
+		jsonHandler.read(Utils.getResourceFilePath(
+				"BigTreeDiffNames.json", this));
+		for (Iterator<Node> it = jsonHandler.iterator(); it.hasNext();) {
+			stringBuilder.append(it.next().getName());
+		}
+		assertEquals(
+				"Tree1-11-1-11-1-1-21-1-1-41-1-1-11-1-1-31-21-2-31-2-11-2-1-11-2-1-1-21-2-1-1-11-2-2",
+				stringBuilder.toString());
+		jsonHandler.deleteWithoutChildren("Tree/1-2/1-2-1/1-2-1-1");
+		assertEquals(86, jsonHandler.getNode("Tree/1-2/1-2-1/1-2-1-1-2").getValue());
+		jsonHandler.deleteWithChildren("Tree/1-1/1-1-1");
+		assertEquals(0, jsonHandler.getNode("Tree/1-1").getChildren().size());
+		jsonHandler.add("1-1-1C", Color.Blue, 10, "Tree/1-1");
+
+		ArrayList<Node> arrayList = new ArrayList<>();
+		arrayList.add(new Node("123", Color.Green, 12));
+		arrayList.add(new Node("124", Color.Blue, 24));
+		arrayList.add(new Node("125", Color.Red, 93));
+		jsonHandler.add(new Node("1-1-1 child #1", Color.Blue, 100, arrayList),
+				"Tree/1-1/1-1-1C");
+		assertEquals("Blue",
+				jsonHandler.getNode("Tree/1-1/1-1-1C/1-1-1 child #1/124").getColor().toString());
+		jsonHandler.create("First", Color.Red, 10);
+		assertThrows(FirstNodeDeleteException.class, () ->
+				jsonHandler.deleteWithoutChildren("First/"));
 	}
 }
