@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Objects;
 
 public class Utils {
 	private Utils() { }
@@ -25,6 +26,19 @@ public class Utils {
 		}
 		writeFile(fileName, content);
 		return fileName;
+	}
+
+	public static String	getResourceFilePath(String fileName, Object object) {
+		String filePath;
+
+		try {
+			filePath = Objects.requireNonNull(object.getClass()
+					.getClassLoader()
+					.getResource(fileName)).getPath();
+		} catch (Exception exception) {
+			throw new InternalTestErrorException(exception);
+		}
+		return filePath;
 	}
 
 	public static void 		writeFile(String fileName, String content) {
