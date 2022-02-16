@@ -314,9 +314,8 @@ public class JSONHandlerImpl implements JSONHandler {
 			throw exception;
 		}
 
-		JSONIterator iterator = new JSONIterator(node, defaultOperator);
 		logger.info("Iterator created (default)");
-		return iterator;
+		return new JSONIterator(this.node, this.defaultOperator);
 	}
 
 	public Iterator<Node>	iterator(BinaryOperator<Node> operator) {
@@ -326,8 +325,7 @@ public class JSONHandlerImpl implements JSONHandler {
 			throw exception;
 		}
 
-		JSONIterator iterator = new JSONIterator(node, operator);
 		logger.info("Iterator created (custom)");
-		return iterator;
+		return new JSONIterator(this.node, operator);
 	}
 }

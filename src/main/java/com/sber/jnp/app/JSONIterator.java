@@ -14,9 +14,9 @@ class JSONIterator implements Iterator<Node> {
 
 	public JSONIterator(Node firstNode, BinaryOperator<Node> operator) {
 		this.operator = operator;
-		nodesQueue = new Stack<>();
-		passedNodes = new HashSet<>();
-		nodesQueue.push(firstNode);
+		this.nodesQueue = new Stack<>();
+		this.passedNodes = new HashSet<>();
+		this.nodesQueue.push(firstNode);
 	}
 
 	public boolean	hasNext() {
@@ -26,25 +26,26 @@ class JSONIterator implements Iterator<Node> {
 	public Node		next() {
 		Node current;
 
-		if (nodesQueue.empty()) {
+		if (this.nodesQueue.empty()) {
 			throw new NoSuchElementException();
 		}
 
-		current = nodesQueue.peek();
-		if (!passedNodes.contains(current)) {
+		current = this.nodesQueue.peek();
+		if (!this.passedNodes.contains(current)) {
 			setCurrentNodePath();
 		}
 
 		if (wasAllChildrenPassed(current)) {
-			nodesQueue.pop();
+			this.nodesQueue.pop();
 		} else {
-			nodesQueue.push(selectChild(current));
+			this.nodesQueue.push(selectChild(current));
 		}
 
-		if (!passedNodes.add(current)) {
+		if (!this.passedNodes.add(current)) {
 			current = next();
-			while (!nodesQueue.empty() && wasAllChildrenPassed(nodesQueue.peek()))
-				nodesQueue.pop();
+			while (!this.nodesQueue.empty() &&
+					wasAllChildrenPassed(this.nodesQueue.peek()))
+				this.nodesQueue.pop();
 		}
 		return current;
 	}
@@ -52,16 +53,16 @@ class JSONIterator implements Iterator<Node> {
 	private void	setCurrentNodePath() {
 		StringBuilder stringBuilder = new StringBuilder();
 
-		nodesQueue.forEach(node -> {
+		this.nodesQueue.forEach(node -> {
 			stringBuilder.append(node.getName());
 			stringBuilder.append("/");
 		});
-		currentNodePath = stringBuilder.toString();
+		this.currentNodePath = stringBuilder.toString();
 	}
 
 	private boolean wasAllChildrenPassed(Node node) {
 		for (Node child : node.getChildren()) {
-			if (!passedNodes.contains(child)) {
+			if (!this.passedNodes.contains(child)) {
 				return false;
 			}
 		}
@@ -73,8 +74,8 @@ class JSONIterator implements Iterator<Node> {
 
 		result = null;
 		for (Node child : parent.getChildren()) {
-			if (!passedNodes.contains(child)) {
-				result = result == null ? child : operator.apply(result, child);
+			if (!this.passedNodes.contains(child)) {
+				result = result == null ? child : this.operator.apply(result, child);
 			}
 		}
 		return result;
