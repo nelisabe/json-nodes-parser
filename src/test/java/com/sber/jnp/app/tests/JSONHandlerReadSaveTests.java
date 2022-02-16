@@ -140,7 +140,8 @@ public class JSONHandlerReadSaveTests {
 		JSONHandler jsonHandler = new JSONHandlerImpl();
 		Node node;
 
-		jsonHandler.read("ComplexTree.json");
+		jsonHandler.read(Utils.getResourceFilePath(
+				"ComplexTree.json", this));
 		node = jsonHandler.getNode("A/F/O/");
 		assertEquals("O", node.getName());
 		assertEquals(44, node.getValue());
@@ -159,7 +160,8 @@ public class JSONHandlerReadSaveTests {
 	public void	WrongNodePath() {
 		JSONHandler jsonHandler = new JSONHandlerImpl();
 
-		jsonHandler.read("ComplexTree.json");
+		jsonHandler.read(Utils.getResourceFilePath(
+				"ComplexTree.json", this));
 		assertThrows(InvalidInternalJsonPathException.class, () ->
 				jsonHandler.getNode(""));
 		assertThrows(InvalidInternalJsonPathException.class, () ->
@@ -228,7 +230,8 @@ public class JSONHandlerReadSaveTests {
 	public void	InvalidValuesInJson() {
 		assertThrows(InvalidValueInJsonException.class, () -> {
 			JSONHandler jsonHandler = new JSONHandlerImpl();
-			jsonHandler.read("ComplexTreeErrors.json");
+			jsonHandler.read(Utils.getResourceFilePath(
+					"ComplexTreeErrors.json", this));
 		});
 	}
 
@@ -262,7 +265,8 @@ public class JSONHandlerReadSaveTests {
 		JSONHandler jsonHandler = new JSONHandlerImpl();
 		Node node;
 
-		jsonHandler.read("BigTree.json");
+		jsonHandler.read(Utils.getResourceFilePath(
+				"BigTree.json", this));
 		jsonHandler.add("C", Color.Blue, 43, "A/H/Z/");
 		assertEquals("C", jsonHandler.getNode("A/H/Z/C/").getName());
 
@@ -280,7 +284,8 @@ public class JSONHandlerReadSaveTests {
 				jsonHandler.add("Name", Color.Red, 50, "A/"));
 		assertThrows(NoJsonObjectReadException.class, () ->
 				jsonHandler.add(node, "A/"));
-		jsonHandler.read("BigTree.json");
+		jsonHandler.read(Utils.getResourceFilePath(
+				"BigTree.json", this));
 		assertThrows(InvalidNodeValueException.class, () ->
 				jsonHandler.add("Name", Color.Red, -10, "A/H/Z/C/"));
 		assertThrows(InvalidInternalJsonPathException.class, () ->
@@ -295,7 +300,8 @@ public class JSONHandlerReadSaveTests {
 		assertThrows(NoJsonObjectReadException.class, () ->
 				jsonHandler.deleteWithChildren("A/H/"));
 
-		jsonHandler.read("BigTree.json");
+		jsonHandler.read(Utils.getResourceFilePath(
+				"BigTree.json", this));
 		assertThrows(InvalidInternalJsonPathException.class, () ->
 				jsonHandler.deleteWithChildren("A/P/"));
 
@@ -353,7 +359,8 @@ public class JSONHandlerReadSaveTests {
 		assertThrows(NoJsonObjectReadException.class, () ->
 				jsonHandler.deleteWithoutChildren("A/H/"));
 
-		jsonHandler.read("BigTree.json");
+		jsonHandler.read(Utils.getResourceFilePath(
+				"BigTree.json", this));
 		assertThrows(InvalidInternalJsonPathException.class, () ->
 				jsonHandler.deleteWithoutChildren("A/P/"));
 
@@ -445,7 +452,8 @@ public class JSONHandlerReadSaveTests {
 	public void	DeleteFirstNode() {
 		JSONHandler jsonHandler = new JSONHandlerImpl();
 
-		jsonHandler.read("BigTree.json");
+		jsonHandler.read(Utils.getResourceFilePath(
+				"BigTree.json", this));
 		assertThrows(InvalidInternalJsonPathException.class, () ->
 			jsonHandler.deleteWithChildren("A/"));
 		assertThrows(InvalidInternalJsonPathException.class, () ->

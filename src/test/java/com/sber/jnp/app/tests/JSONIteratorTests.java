@@ -138,7 +138,8 @@ public class JSONIteratorTests {
 		JSONHandler	jsonHandler = new JSONHandlerImpl();
 		Iterator<Node> iterator;
 
-		jsonHandler.read("BigTree.json");
+		jsonHandler.read(Utils.getResourceFilePath(
+				"BigTree.json", this));
 		iterator = jsonHandler.iterator();
 		while (iterator.hasNext()) {
 			stringBuilder.append(iterator.next().getName());
@@ -152,7 +153,8 @@ public class JSONIteratorTests {
 		JSONHandler jsonHandler = new JSONHandlerImpl();
 		Iterator<Node> iterator;
 
-		jsonHandler.read("BigTree.json");
+		jsonHandler.read(Utils.getResourceFilePath(
+				"BigTree.json", this));
 		iterator = jsonHandler.iterator((x, y) -> {
 			if (y.getName().compareTo(x.getName()) < 0)
 				return y;
@@ -170,7 +172,8 @@ public class JSONIteratorTests {
 		JSONHandler jsonHandler = new JSONHandlerImpl();
 		Iterator<Node> iterator;
 
-		jsonHandler.read("ComplexTree.json");
+		jsonHandler.read(Utils.getResourceFilePath(
+				"ComplexTree.json", this));
 		iterator = jsonHandler.iterator();
 		while (iterator.hasNext()) {
 			stringBuilder.append(iterator.next().getName());
@@ -185,7 +188,8 @@ public class JSONIteratorTests {
 		JSONHandler jsonHandler = new JSONHandlerImpl();
 		Iterator<Node> iterator;
 
-		jsonHandler.read("ComplexTree.json");
+		jsonHandler.read(Utils.getResourceFilePath(
+				"ComplexTree.json", this));
 		iterator = jsonHandler.iterator((x, y) ->
 				x.getValue() > y.getValue() ? x : y);
 		while (iterator.hasNext()) {
