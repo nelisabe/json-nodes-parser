@@ -315,7 +315,7 @@ public class JSONHandlerImpl implements JSONHandler {
 		}
 
 		logger.info("Iterator created (default)");
-		return new JSONIterator(this.node, this.defaultOperator);
+		return new JSONIterator(node, defaultOperator);
 	}
 
 	public Iterator<Node>	iterator(BinaryOperator<Node> operator) {
@@ -326,6 +326,6 @@ public class JSONHandlerImpl implements JSONHandler {
 		}
 
 		logger.info("Iterator created (custom)");
-		return new JSONIterator(this.node, operator);
+		return new JSONIterator(node, operator);
 	}
 }
