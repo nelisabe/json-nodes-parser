@@ -25,6 +25,9 @@ public class JSONHandlerImpl implements JSONHandler {
 
 	private static final Logger logger = LoggerFactory.getLogger(JSONHandlerImpl.class);
 
+	private final int	MIN_VALUE = 0;
+	private final int	MAX_VALUE = 100;
+
 	public JSONHandlerImpl() {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 
@@ -107,8 +110,8 @@ public class JSONHandlerImpl implements JSONHandler {
 		while (it.hasNext()) {
 			current = it.next();
 			if (current.getValue() < 0 || current.getValue() > 100) {
-				logger.error("Invalid value in node: {}. Allowed values: 0 - 100.",
-						it.getCurrentNodePath());
+				logger.error("Invalid value in node: {}. Allowed values: {} - {}.",
+						it.getCurrentNodePath(), MIN_VALUE, MAX_VALUE);
 				error = true;
 			}
 
